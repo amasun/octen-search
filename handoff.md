@@ -949,6 +949,14 @@
   - **CSS 样式表深度清理**：
     - 从 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中清理了废弃的 `.pricing-dual-card`、`.pricing-dual-tab` 与 `.pricing-dual-tag` 冗余样式代码，确保样式表精简高效。
 
+### (93) Pay-as-you-go 价格卡片移除标题上方图标（完全对齐 05-pricing 纯净无图标风格）
+- **需求**：去掉 标题上的icons（确认针对 Pay-as-you-go 价格卡片）。
+- **落实方案**：
+  - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中，彻底移除了 4 张卡片（Web Search、Broad Search、Image Search、Video Search）顶部的 `.pricing-card-icon` 容器及内部 SVG 图标。
+  - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中：
+    - 移除了冗余的 `.pricing-card-icon` 与 `.pricing-card-icon svg` 样式规则；
+    - 将 `.pricing-bento-card` 最小高度从 `180px` 紧凑优化为 `140px`，卡片内仅保留顶部的「API 标题 + 徽章」与底部的「价格信息」，呼吸感适中，视觉层次更加干净利落，100% 对齐 `05-pricing` 的极简工匠品质。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
