@@ -878,16 +878,33 @@
   - 配置标准 `.gitignore` 过滤系统缓存与临时文件。
   - 初始化本地 Git 仓库，建立 `main` 主分支，完成首个全量结构化 Commit。
   - 通过 `gh repo create amasun/octen-search --public` 创建远端公共仓库并成功推送全量代码。
-  - **仓库地址**：[https://github.com/amasun/octen-search](https://github.com/amasun/octen-search)
+### (89) Navbar 菜单根据 Figma 13590:139982 规范重构 Application 视觉卡片
+- **需求**：`https://www.figma.com/design/jnIlRSuXffn5g2OxnsqYIE/Octen_%E6%B1%87%E6%80%BB?node-id=13590-139982&t=Z0uSptuLmVqwictA-4 修改菜单样式`。
+- **落实方案**：
+  - **Figma 像素级解析**：读取 Node `13590:139982` 及各子卡片节点（`13590:161514`, `13592:161612`, `13592:161650`, `13592:161692`）。
+  - **卡片式布局重构**：
+    - 右侧 `Application` 栏从原“浅灰圆角方形缩略图 + 底部外挂文字”结构升级为 2x2 沉浸式暗色氛围卡片（210.67px x 145px，圆角 12px）。
+    - 4 张卡片分别为：
+      1. **Answer**：翡翠绿涡流宇宙背景 + 纯白高精度矢量 Crosshair/Target 图标 + 纯白单行标题。
+      2. **Deep Research**：深蓝粒子数据矩阵背景 + 纯白高精度矢量 Microscope 显微镜图标 + 纯白单行标题。
+      3. **Multimodal Chat**：暗绿矩阵字符流背景 + 纯白高精度矢量 Chat 气泡多模态图标 + 纯白单行标题 + 右上角悬浮 `Early Access` 毛玻璃徽章。
+      4. **Grounded Generation**：深邃墨绿绽放花瓣背景 + 纯白高精度矢量 Magic Wand 魔法棒图标 + 纯白单行标题 + 右上角悬浮 `Early Access` 毛玻璃徽章。
+  - **矢量图标与高清背景资产落地**：
+    - 直接从 Figma 原型提取 4 个精准的矢量 SVG 图标嵌入卡片中。
+    - 生成并保存 4 张 4K 级别电影质感暗色背景纹理至 [`images/app-answer.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-answer.jpg)、[`images/app-deep-research.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-deep-research.jpg)、[`images/app-multimodal-chat.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-multimodal-chat.jpg)、[`images/app-grounded-generation.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-grounded-generation.jpg)。
+  - **高级交互体验**：
+    - 悬浮时卡片背景以柔和贝塞尔曲线微缩放（`scale(1.06)`），图标产生微妙向上浮动（`-2px`）。
+    - 文字标题在任何状态下保持纯白色（`color: #FFFFFF !important`），不发生突兀变色。
+    - `Early Access` 徽章默认透明隐藏（`opacity: 0`），仅在卡片 Hover 时平滑浮现（`opacity: 1`）；触屏设备保持常驻可见。
 
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
-- [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html)：页面结构骨架
-- [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)：核心样式表（含 Hero Canvas、scrollytelling、响应式、Pricing 样式）
+- [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html)：页面结构骨架（含 Navbar 下拉菜单暗色应用卡片）
+- [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)：核心样式表（含 Navbar Application 卡片、Hero Canvas、scrollytelling、响应式、Pricing 样式）
 - [`css/variables.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/variables.css)：全局主题变量与容器定义
 - [`css/animations.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/animations.css)：动效定义
-- [`js/hero-orbit.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/hero-orbit.js)：**[新增]** Hero 3D 球形环绕 Canvas 2D 渲染引擎
+- [`js/hero-orbit.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/hero-orbit.js)：Hero 3D 球形环绕 Canvas 2D 渲染引擎
 - [`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js)：交互逻辑（Scroll-spy 监听器、FAQ 折叠等）
 - [`js/snippets.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/snippets.js)：各 API 请求/响应代码示例数据
 

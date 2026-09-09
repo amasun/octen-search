@@ -2645,10 +2645,10 @@
 
 .nav-dropdown-app-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 210.67px);
   grid-template-rows: repeat(2, 145px);
   gap: 12px;
-  width: 454px;
+  width: 454.34px;
   height: 302px;
   border-left: 1px solid rgba(201, 201, 201, 0.5);
   padding-left: 20px;
@@ -2656,53 +2656,117 @@
 }
 
 .nav-dropdown-app-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  display: block;
   height: 145px;
-  width: 100%;
+  width: 210.67px;
+  border-radius: 12px;
+  border: 1px solid #EEEEEE;
+  overflow: hidden;
+  position: relative;
   text-decoration: none;
   cursor: pointer;
   box-sizing: border-box;
-  position: relative;
+  background: #000000;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.nav-app-thumb {
-  position: relative;
-  flex: 1 0 0;
-  min-height: 0;
-  width: 100%;
-  background: #F9F8F6;
-  border-radius: 12px;
-  overflow: clip;
-  transition: background-color 0.16s ease;
+.nav-dropdown-app-item:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
-.nav-dropdown-app-item:hover .nav-app-thumb {
-  background-color: #F2F0EB;
+.nav-app-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.nav-dropdown-app-item:hover .nav-app-bg {
+  transform: scale(1.06);
+  opacity: 1;
+}
+
+.nav-app-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+  transition: background 0.3s ease;
+}
+
+.nav-dropdown-app-item:hover .nav-app-overlay {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+.nav-app-center-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 2;
+  pointer-events: none;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.nav-app-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-dropdown-app-item:hover .nav-app-icon {
+  transform: translateY(-2px) scale(1.06);
+}
+
+.nav-app-title {
+  font-family: 'DM Sans', var(--font-sans, 'Inter', sans-serif);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #FFFFFF !important;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 2px 10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
 }
 
 .nav-app-badge {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  height: 24px;
-  padding: 0 6px;
-  background: #E3FFE2;
-  border: 1px solid #6FD1A5;
+  top: 8px;
+  right: 8px;
+  height: 22px;
+  padding: 0 8px;
+  background: rgba(16, 38, 26, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(111, 209, 165, 0.8);
   border-radius: 6px;
   box-sizing: border-box;
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 11px;
   font-weight: 500;
-  line-height: 22px;
+  line-height: 20px;
   letter-spacing: -0.5px;
-  color: #1B9C62;
+  color: #70FE7E;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  z-index: 3;
   opacity: 0;
   visibility: hidden;
   transform: translateY(2px);
@@ -2723,23 +2787,6 @@
     visibility: visible;
     transform: none;
   }
-}
-
-.nav-app-meta {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  width: 100%;
-  flex-shrink: 0;
-}
-
-.nav-app-title {
-  font-family: 'DM Sans', var(--font-sans, 'Inter', sans-serif);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  color: #181D27;
-  white-space: nowrap;
 }
 
 /* Responsive adjustments */
