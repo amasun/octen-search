@@ -1208,6 +1208,22 @@
   - 将 4 个 `.sticky-graphic-slot` 槽位中的中文副说明 `（动画图示）` 统一精炼为符合国际科技顶尖产品设计语调的英文文案：**`Conceptual Motion Showcase`**；
   - 精准传达“概念图形动画展示理念”，与深灰标题文字（`Web Search`、`Broad Search`、`Image Search`、`Video Search`）形成优雅专业的排版层级。
 
+### (119) Hero 区域 3D 空间环绕穿插（3D Sandwich）架构落地 (Hero 3D Orbit Sandwich)
+- **需求**：hero区域 Real-time search API for AI agents 标题可以挪动到旋转圆环的后面吗? 产生类似真实的纵深感。用户确认采用“方案一：真 3D 空间环绕穿插（3D Sandwich）”。
+- **空间原理与技术架构**：
+  - **分层画布同步通道**（[`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html)）：
+    - 拆分为底层背景画布 `<canvas id="heroOrbitCanvasBack">` 与顶层前景画布 `<canvas id="heroOrbitCanvasFront">`；
+  - **精准空间层级（Stacking Context 穿插）**（[`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+    - **背景画布层**（`.hero-orbit-wrap-back`）：`z-index: 3`，承载远景粒子（`Z < 0`）；
+    - **大标题文字层**（`.hero-title`）：`position: relative; z-index: 5`，伫立于 3D 空间原点平面；
+    - **前景画布层**（`.hero-orbit-wrap-front`）：`z-index: 7`，承载近景粒子（`Z >= 0`）；
+    - **文字与交互层**（`.hero-subtitle`、`.hero-ctas`、`.hero-credit-note`）：`position: relative; z-index: 10`，保持文字高对比度与按钮交互 100% 顺畅；
+    - 两个画布容器均严格设置 `pointer-events: none;`，标题文字划选复制与 CTA 按钮点击完全零干扰；
+  - **高性能 3D 渲染管道分流**（[`js/hero-orbit.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/hero-orbit.js)）：
+    - 计算粒子空间坐标 `p3d.z`，当 `z < zSplitOffset` 时绘制于背景画布（在文字后方穿过），当 `z >= zSplitOffset` 时绘制于前景画布（在文字正前方飞掠而过）；
+    - 粒子在旋转过程中自然从大标题文字背后钻出、从文字表面滑过、再没入文字背后，形成真实震撼的电影级行星环天体穿插纵深感；
+    - 控制面板新增 `zSplitOffset`（3D 穿插分割面）滑块，支持实时微调前后穿透临界深度。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)

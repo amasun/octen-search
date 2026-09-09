@@ -265,9 +265,9 @@
       <div class="glow-ellipse-accent"></div>
     </div>
 
-    <!-- 3D Orbiting Dots Canvas Background (Converge.AI Inspired) -->
-    <div class="hero-orbit-wrap" aria-hidden="true">
-      <canvas id="heroOrbitCanvas" class="hero-orbit-canvas"></canvas>
+    <!-- 3D Orbiting Dots Canvas: Back Layer (Behind Title, Z < 0) -->
+    <div class="hero-orbit-wrap hero-orbit-wrap-back" aria-hidden="true">
+      <canvas id="heroOrbitCanvasBack" class="hero-orbit-canvas"></canvas>
     </div>
 
     <div class="container hero-content">
@@ -292,6 +292,11 @@
         </a>
       </div>
       <p class="hero-credit-note">$5 in free credit on signup.</p>
+    </div>
+
+    <!-- 3D Orbiting Dots Canvas: Front Layer (In front of Title, Z >= 0) -->
+    <div class="hero-orbit-wrap hero-orbit-wrap-front" aria-hidden="true">
+      <canvas id="heroOrbitCanvasFront" class="hero-orbit-canvas"></canvas>
     </div>
   </section>
 

@@ -6,11 +6,16 @@
 (function () {
   function initHeroOrbit() {
     const hero = document.getElementById('hero');
-    const canvas = document.getElementById('heroOrbitCanvas');
-    if (!hero || !canvas) return;
+    // Support both dual-canvas 3D Sandwich mode and single canvas fallback
+    const canvasBack = document.getElementById('heroOrbitCanvasBack') || document.getElementById('heroOrbitCanvas');
+    const canvasFront = document.getElementById('heroOrbitCanvasFront');
+    if (!hero || !canvasBack) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const ctxBack = canvasBack.getContext('2d');
+    const ctxFront = canvasFront ? canvasFront.getContext('2d') : null;
+    if (!ctxBack) return;
+
+    const isSandwich = Boolean(ctxFront);
 
     // --- Configuration Parameters ---
     const config = {
@@ -32,6 +37,8 @@
       dofStrength: 14.5,            // Max background blur intensity in px
       dofMinAlpha: 0.18,            // Deepest background dot alpha
       introDuration: 1.8,           // Entrance transition in seconds
+      zSplitOffset: 0,              // 3D Sandwich split threshold (Z offset relative to title plane)
+      depthMode: 'sandwich',        // 'sandwich' (3D 穿插), 'behind' (全前置), 'front' (全后置)
     };
 
     let width = 0;
@@ -93,9 +100,16 @@
       if (width <= 0 || height <= 0) return;
 
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      canvasBack.width = width * dpr;
+      canvasBack.height = height * dpr;
+      ctxBack.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      if (ctxFront && canvasFront) {
+        canvasFront.width = width * dpr;
+        canvasFront.height = height * dpr;
+        ctxFront.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
 
       scaleRatio = Math.min(1, Math.max(0.48, width / 1200));
     }
@@ -106,7 +120,10 @@
       const delta = Math.min(50, now - lastTime);
       lastTime = now;
 
-      ctx.clearRect(0, 0, width, height);
+      ctxBack.clearRect(0, 0, width, height);
+      if (ctxFront) {
+        ctxFront.clearRect(0, 0, width, height);
+      }
 
       const cx = width / 2;
       const cy = height * config.centerYRatio;
@@ -156,25 +173,40 @@
       // 3. Painters Algorithm (Far to near)
       dots.sort((a, b) => a.z - b.z);
 
-      // 4. Render Pure Solid Color Dots
+      // 4. Render Dots across 3D Sandwich Layers
+      const zThreshold = config.zSplitOffset || 0;
+
       for (const dot of dots) {
         if (dot.radius <= 0) continue;
-        ctx.save();
 
-        if (dot.blur > 0.4) {
-          ctx.filter = `blur(${dot.blur.toFixed(1)}px)`;
-        } else {
-          ctx.filter = 'none';
+        let targetCtx = ctxBack;
+        if (isSandwich) {
+          if (config.depthMode === 'behind') {
+            targetCtx = ctxFront;
+          } else if (config.depthMode === 'front') {
+            targetCtx = ctxBack;
+          } else {
+            // True 3D Sandwich: front half (z >= zThreshold) renders on foreground canvas
+            targetCtx = (dot.z >= zThreshold) ? ctxFront : ctxBack;
+          }
         }
 
-        ctx.globalAlpha = dot.alpha;
+        targetCtx.save();
 
-        ctx.fillStyle = config.dotColor;
-        ctx.beginPath();
-        ctx.arc(dot.x, dot.y, dot.radius, 0, twoPi);
-        ctx.fill();
+        if (dot.blur > 0.4) {
+          targetCtx.filter = `blur(${dot.blur.toFixed(1)}px)`;
+        } else {
+          targetCtx.filter = 'none';
+        }
 
-        ctx.restore();
+        targetCtx.globalAlpha = dot.alpha;
+
+        targetCtx.fillStyle = config.dotColor;
+        targetCtx.beginPath();
+        targetCtx.arc(dot.x, dot.y, dot.radius, 0, twoPi);
+        targetCtx.fill();
+
+        targetCtx.restore();
       }
 
       if (!prefersReducedMotion.matches) {
@@ -566,6 +598,19 @@
             set: (v) => {
               config.perspective = Number(v);
             }
+          },
+          {
+            id: 'zSplitOffset',
+            label: '3D 穿插分割面 Z Split',
+            hint: '文字前后穿插的 Z 轴阈值（0 为文字中心面，负值更多粒子在前，正值更多粒子在后）',
+            min: -150,
+            max: 150,
+            step: 5,
+            unit: 'px',
+            get: () => config.zSplitOffset,
+            set: (v) => {
+              config.zSplitOffset = Number(v);
+            }
           }
         ]
       },
@@ -778,6 +823,7 @@
   dofStrength: ${config.dofStrength},
   dofMinAlpha: 0.18,
   introDuration: 1.8,
+  zSplitOffset: ${config.zSplitOffset},
 };`;
 
       navigator.clipboard.writeText(codeSnippet).then(() => {
