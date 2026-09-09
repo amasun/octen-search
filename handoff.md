@@ -1149,6 +1149,15 @@
   - 属性调整为 `justify-content: center; padding: 0; margin-top: 0;`；
   - **视觉呈现**：左右两侧在初始状态下均为严格一致的 480px 高度容器，左侧文字内容上下各预留约 90px 对称呼吸空间，水平中心轴线（Y = 240px）与右侧矩形卡片的几何中心线完全重合，呈现出优雅对称的居中对齐。
 
+### (113) API 视差滚动说明文案宽度占满、字号 14px 及颜色 #A4A4A4 (API Step Description Typography)
+- **需求**：“Ranked results from the live web, with the passage that answers the query.” 类似文字区内容宽度占满容器，字号14px，颜色A4A4A4。
+- **落实方案**（[`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+  - 将 `.api-step-inner` 宽度明确设为 `width: 100%;`；
+  - 对 `.api-step-desc`（包含 Web Search、Broad Search、Image Search、Video Search 四大主说明文字）：
+    - 移除原本的 `max-width: 460px;` 限制，统一配置为 `width: 100%; max-width: 100%;` 占满左栏容器宽度；
+    - 字号由 `16px` 优化为 **`14px`**（符合偶数规范）；
+    - 文本颜色精确对齐为 **`#A4A4A4`**，排版视觉更加工整、舒展且细腻。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
