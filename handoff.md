@@ -988,6 +988,16 @@
     - 将 `#endpoints .section-title` 由 `One search engine for every modality` 更新为简洁有力的 **`Search API`**；
     - 将辅助文本 `.section-desc` 整合为：`One search engine for every modality. Ranked passages, visual assets, and video timestamps on a single key.`，完整保留原有语意，段落排版兼顾信息密度与现代 SaaS 质感。
 
+### (97) Search API 步骤标题图标黑色化、去绿底及 36px 规格调整
+- **需求**：以下内容都是针对Search API该区域的调整。文字区标题前面的icon改为黑色，去掉绿色背景。icon大小36px。
+- **落实方案**：
+  - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中：
+    - 将 `.api-step-title-icon` 尺寸设为 `width: 36px; height: 36px;`，剥除绿色半透明背景与圆角，改为 `background: transparent;`，颜色指定为墨黑 `color: var(--text-main, #0F172A);`；
+    - 将 `.api-step-title-icon svg` 尺寸统一设置为 `width: 36px; height: 36px;`。
+  - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中：
+    - 将 4 个步骤标题前面的 SVG（Web Search、Broad Search、Image Search、Video Search）宽高属性由 `24x24` 全量升级为 `36x36`；
+    - 将原有绿色描边/填充色值（`stroke="#039855"` / `fill="#039855"`）统一替换为 `stroke="currentColor"` 与 `fill="currentColor"`，使图标呈现纯净深邃的墨黑色，与 32px 衬线标题在视觉重心和基线上达到黄金比例对齐。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)

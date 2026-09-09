@@ -1240,15 +1240,14 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border-radius: 8px;
-  background: rgba(3, 152, 85, 0.08);
+  background: transparent;
   flex-shrink: 0;
-  color: var(--primary-green, #039855);
+  color: var(--text-main, #0F172A);
 }
 
 .api-step-title-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 36px;
+  height: 36px;
   display: block;
 }
 
