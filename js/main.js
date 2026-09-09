@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 2. Four APIs Sticky Scrollytelling Controller (x.ai/grok style)
   const scrollySteps = document.querySelectorAll('.endpoints-api-step');
   const scrollySlots = document.querySelectorAll('.sticky-graphic-slot');
-  let activeStepIndex = 0;
+  let activeStepIndex = -1;
 
   function setScrollyActive(index) {
     if (index === activeStepIndex) return;
@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     scrollySteps.forEach((step, i) => {
       step.classList.toggle('is-active', i === index);
+      step.classList.toggle('is-passed', i < index);
     });
 
     scrollySlots.forEach((slot, i) => {
@@ -76,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (scrollySteps.length > 0) {
     // 1. Scroll-spy tracking using viewport middle target
     const updateScrollySpy = () => {
-      const viewportTarget = window.innerHeight * 0.5;
+      const viewportTarget = window.innerHeight * 0.52;
       let closestIndex = 0;
       let minDistance = Infinity;
 
@@ -99,7 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2. Click to navigate & activate step
     scrollySteps.forEach(step => {
-      step.addEventListener('click', () => {
+      step.addEventListener('click', (e) => {
+        if (e.target.closest('a, button')) return; // Don't interrupt direct action clicks
         const idx = parseInt(step.dataset.apiIndex, 10);
         if (!isNaN(idx)) {
           setScrollyActive(idx);

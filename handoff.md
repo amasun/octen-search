@@ -1041,6 +1041,24 @@
     - 主按钮 `.api-step-btn-primary`：墨黑背景 `#0F172A`，悬浮提亮至 `#1E293B`；
     - 辅助按钮 `.api-step-btn-secondary`：纯白背景加浅灰微边框 `rgba(15, 23, 42, 0.16)`，微弱投影与淡灰悬浮，形成严谨利落的高端工匠层级。
 
+### (103) Search API 视差滚动主标题吸顶、文字区渐隐蒙版与上下游走空间扩展
+- **需求**：
+  1. 视差滚动时保证主标题 Search API 和副标题（One single key for every modality — ranked passages, visual assets, and video timestamps.）不动；
+  2. 给每个文字区增加渐隐的蒙版，让不要和主标题产生干涉；
+  3. 增加主标题区和下面四个文字区和右侧卡片的上下边界，让视差滚动有更长的上下移动范围。
+- **落实方案**：
+  - **主标题吸顶锁定**：
+    - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中配置 `#endpoints .section-head` 为 `position: sticky; top: 68px; z-index: 25; background: #FFFFFF; padding: 24px 0 20px; margin: 0 auto 56px;`，在整个 Search API 滚动叙事过程中始终稳稳吸附在导航栏下方；滚出该大区时随自然流离开视口；
+    - 配置 `#endpoints .section-head::after` 羽化阴影微层，自顶部标题向下延伸 `28px` 的平滑白色羽化过渡。
+  - **文字区顶部渐隐蒙版**：
+    - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 的 `.endpoints-scrolly-left` 顶部新增 `<div class="scrolly-fade-mask-top" aria-hidden="true"></div>`；
+    - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中将其配置为 `position: sticky; top: 188px; height: 140px; margin-top: -140px; z-index: 18;`，采用从白到透明的平滑渐变蒙版，任何文字块向上滚动靠近主标题时都会优雅地淡出隐去，绝不与主标题产生视觉干涉与重叠；
+    - 在 [`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js) 中为已滚过的步骤添加 `.is-passed` 状态，配合 CSS `opacity: 0; transform: translateY(-16px); pointer-events: none;` 彻底消除穿模与误触。
+  - **扩展上下边界与视差游走范围**：
+    - 将 `.endpoints-api-step` 最小高度扩展为 `min-height: 560px;`（首项 480px 保持水平居中对齐，末项预留 `padding-bottom: 240px;`），使视差滚动游走路径更充裕、呼吸感更充足；
+    - 右侧卡片 `.sticky-frame-wrapper` 吸顶锚点提升为 `top: max(216px, calc(50vh - 220px));`，与吸顶主标题保持安全间距，杜绝遮挡；
+    - 移动端 `@media (max-width: 1024px)` 自适应降级为常规流布局，保证各端体验一致。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)

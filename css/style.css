@@ -1143,7 +1143,7 @@
    -------------------------------------------------------------------------- */
 #endpoints {
   background: #FFFFFF;
-  padding: 0 0 100px 0;
+  padding: 0 0 140px 0;
   position: relative;
   border-top: none;
 }
@@ -1151,14 +1151,39 @@
 #endpoints > .container,
 #endpoints > .container-wide {
   border-top: 1px solid var(--border-light, #E2E5E0);
-  padding-top: 100px;
+  padding-top: 80px;
+}
+
+/* Sticky Search API Section Head: stays pinned during scrollytelling */
+#endpoints .section-head {
+  position: sticky;
+  top: 68px;
+  z-index: 25;
+  background: #FFFFFF;
+  padding: 24px 0 20px;
+  margin: 0 auto 56px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Subtle feathered gradient extending downward from sticky title */
+#endpoints .section-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 28px;
+  background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
 }
 
 .endpoints-scrolly-grid {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
-  gap: 56px;
+  gap: 64px;
   position: relative;
+  margin-top: 24px;
 }
 
 /* Left Column: API Step Blocks */
@@ -1168,12 +1193,23 @@
   position: relative;
 }
 
+/* Sticky top fade-out gradient mask specifically for left text column */
+.scrolly-fade-mask-top {
+  position: sticky;
+  top: 188px;
+  height: 140px;
+  margin-top: -140px;
+  background: linear-gradient(to bottom, #FFFFFF 20%, rgba(255, 255, 255, 0.85) 60%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  z-index: 18;
+}
+
 .endpoints-api-step {
-  min-height: 380px;
+  min-height: 560px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 24px 0;
+  padding: 40px 0;
   cursor: pointer;
 }
 
@@ -1185,12 +1221,12 @@
 }
 
 .endpoints-api-step:last-child {
-  min-height: 420px;
-  padding-bottom: 120px;
+  min-height: 500px;
+  padding-bottom: 240px;
 }
 
 .api-step-inner {
-  transition: opacity 0.35s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease;
   opacity: 0.28;
 }
 
@@ -1200,6 +1236,13 @@
 
 .endpoints-api-step:not(.is-active):hover .api-step-inner {
   opacity: 0.55;
+}
+
+/* Smooth fade-out and slight upward drift when a step is scrolled past */
+.endpoints-api-step.is-passed .api-step-inner {
+  opacity: 0;
+  transform: translateY(-16px);
+  pointer-events: none;
 }
 
 
@@ -1361,7 +1404,7 @@
 
 .sticky-frame-wrapper {
   position: sticky;
-  top: max(80px, calc(50vh - 240px));
+  top: max(216px, calc(50vh - 220px));
   height: 480px;
   width: 100%;
   z-index: 10;
@@ -2162,9 +2205,21 @@
   .ecosystem-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  #endpoints .section-head {
+    position: static;
+    padding: 0 0 24px;
+    margin-bottom: 32px;
+  }
+  #endpoints .section-head::after {
+    display: none;
+  }
+  .scrolly-fade-mask-top {
+    display: none;
+  }
   .endpoints-scrolly-grid {
     grid-template-columns: 1fr;
     gap: 40px;
+    margin-top: 0;
   }
   .endpoints-api-step,
   .endpoints-api-step:first-child,
@@ -2173,9 +2228,11 @@
     height: auto;
     padding: 28px 0;
   }
-  .api-step-inner {
+  .api-step-inner,
+  .endpoints-api-step.is-passed .api-step-inner {
     opacity: 1;
     transform: none;
+    pointer-events: auto;
   }
   .sticky-frame-wrapper {
     position: static;
