@@ -1202,6 +1202,12 @@
       - Hover：`background-color: #F8FAFC; border-color: rgba(15, 23, 42, 0.32); color: #0F172A;`；
     - **防护样式**：增加防御性样式规则，防止任何外部类对按钮引入 translateY 或径向光晕残留。
 
+### (118) Search API 占位卡片说明文字替换为英文 "Conceptual Motion Showcase"
+- **需求**：Search API-动画图示 四个字改为英文，意思为 概念图形动画展示理念。
+- **落实方案**（[`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html)）：
+  - 将 4 个 `.sticky-graphic-slot` 槽位中的中文副说明 `（动画图示）` 统一精炼为符合国际科技顶尖产品设计语调的英文文案：**`Conceptual Motion Showcase`**；
+  - 精准传达“概念图形动画展示理念”，与深灰标题文字（`Web Search`、`Broad Search`、`Image Search`、`Video Search`）形成优雅专业的排版层级。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
