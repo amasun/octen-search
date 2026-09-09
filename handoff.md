@@ -1141,6 +1141,14 @@
     - 字体规范：`font-family: var(--font-mono); font-size: 10px; font-weight: 500; line-height: 1; letter-spacing: -0.01em;`；
     - 尺寸与对齐：高度 `18px`，内边距 `0 6px`，圆角 `4px`，与标题及说明文字紧凑平齐（`vertical-align: 1px; margin-right: 6px;`），呈现克制专业的开发者标签质感。
 
+### (112) Web Search 初始文字区与右侧 480px 卡片精确水平居中对齐 (Web Search Horizontal Center Alignment)
+- **需求**：Web Search 文字区默认位置太靠上，没有和右侧卡片水平居中对齐。
+- **问题定位**：此前为了追求顶边强行对齐，设置了 `justify-content: flex-start;`，导致约 300px 高的文字块紧贴 0px 顶部，而右侧卡片总高为 480px（上下留白不对等，视觉显得突兀偏上、未沿水平中心线对齐）。
+- **落实方案**（[`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+  - 将 `.endpoints-api-step:first-of-type` 高度与右侧卡片精准对齐为 `height: 480px; min-height: 480px;`；
+  - 属性调整为 `justify-content: center; padding: 0; margin-top: 0;`；
+  - **视觉呈现**：左右两侧在初始状态下均为严格一致的 480px 高度容器，左侧文字内容上下各预留约 90px 对称呼吸空间，水平中心轴线（Y = 240px）与右侧矩形卡片的几何中心线完全重合，呈现出优雅对称的居中对齐。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
