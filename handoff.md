@@ -911,6 +911,30 @@
     - 在 [`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js) 中，彻底移除了 window scroll / resize 复杂监听器与正反向 `is-revealed` / `unreveal` 状态机。
     - 保留轻量的一阶 `IntersectionObserver`，仅在区域进入视口时从容触发一次数字滚轮，平稳克制、零性能负担。
 
+### (91) Hero 区域黑底化与全要素反色（对齐 05-pricing 配色与光晕系统）
+- **需求**：将 hero 更改为黑色背景，相关元素反色，参考之前的配色（05-pricing 中的 hero 背景 `X:\XCoding\Octen\05-pricing`）。
+- **落实方案**：
+  - **Hero 背景与光晕系统精准对齐 05-pricing**：
+    - `#hero` 背景色由纯白恢复为 Obsidian Dark 空间基底，并叠加翡翠微光垂直渐变：`background: linear-gradient(180deg, rgba(17, 70, 43, 0.6) 0%, rgba(8, 11, 18, 0) 100%), #080B12;`。
+    - 重新启用 `.hero-glow-container` 氛围光晕层，精准继承 `05-pricing` 的 `HeroLightGlow` 规范（尺寸 2002px x 323px，居中 `left: calc(50% - 1001px)`，顶部 `-219.56px`，透明度 0.6）：
+      - `.glow-ellipse-green`：深绿模糊大椭圆（`#2D985E`，`filter: blur(200px)`）。
+      - `.glow-ellipse-accent`：亮黄核心光斑（`#F4FE38`，`filter: blur(100px)`，`left/right: 22.61%`）。
+  - **全要素反色系统 (Dark Theme Inversion)**：
+    - **Hero 主标题 (`.hero-title`)**：纯白 `#FFFFFF`，配合深邃微投影 `text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6)`。
+    - **Hero 副标题 (`.hero-subtitle`)**：清晰副文字 `#FFFFFF / rgba(255, 255, 255, 0.85)`，强调高亮词汇（`.highlight-credit`）采用品牌荧光翠绿 `#70FE7E`（粗体 700）。
+    - **赠金说明 (`.hero-credit-note`)**：中性浅白透灰 `rgba(255, 255, 255, 0.65)`，主按钮 Hover 时高亮提亮为 `#70FE7E`。
+    - **主 CTA 按钮 (`.btn-hero-primary`)**：反色为纯白胶囊按钮（`background: #FFFFFF; color: #100F09;`），箭头图标对应着色为 `#100F09`，并配有极微翡翠光晕投影 `box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 0 20px rgba(112, 254, 126, 0.12)`；Hover 时平滑变为 `#F0F2F0` 并微向上浮动。
+    - **次 CTA 按钮 (`.btn-hero-ghost`)**：反色为暗色毛玻璃幽灵按钮（`background: rgba(255, 255, 255, 0.08); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.24); backdrop-filter: blur(12px)`）。
+  - **顶部导航栏智能双主题自适应联动 (Adaptive Dual-theme Navbar)**：
+    - **置顶于 Hero 黑底区**（`window.scrollY <= 20`）：
+      - 自动显示浅色版 Logo（`.nav-logo-dark` 白色 Octen 字样 + 荧光绿图形），隐藏深色 Logo。
+      - 导航链接文字反色为高透纯白 `rgba(255, 255, 255, 0.90)`，Hover 底色为 `rgba(255, 255, 255, 0.10)`。
+      - 右侧 `API Platform` 按钮精准对齐 `05-pricing` 的暗底半透白胶囊按钮（`bg-white/10 hover:bg-white/20 border-white/50 backdrop-blur-[4px] text-white`）。
+    - **在 Hero 内部轻微滑动**（`20 < window.scrollY <= heroBottom`）：
+      - 启用 `.header-nav-exact.scrolled-dark`，导航栏包裹入深黑曜石微透毛玻璃胶囊（`background: rgba(8, 11, 18, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15)`），文字与 Logo 维持暗主题高对比度。
+    - **滑出 Hero 进入下方纯白正文区**（`window.scrollY > heroBottom`）：
+      - 自动平滑过渡为 `.header-nav-exact.scrolled`（纯白微透毛玻璃胶囊 `rgba(255, 255, 255, 0.95)`），Logo 自动切换为墨黑版（`.nav-logo-light`），导航文字切换为深灰 `#181D27`，按钮切换为黑底白字胶囊，保证在任何背景区域下极佳的可读性与高级感。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)

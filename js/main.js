@@ -6,15 +6,25 @@
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Dynamic Header Navigation on Scroll
   const headerNav = document.querySelector(".header-nav-exact") || document.querySelector(".header-nav");
+  const heroSection = document.getElementById("hero");
   if (headerNav) {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      const heroBottom = heroSection ? (heroSection.offsetTop + heroSection.offsetHeight - 65) : 550;
+      const scrollY = window.scrollY;
+
+      if (scrollY > heroBottom) {
         headerNav.classList.add("scrolled");
+        headerNav.classList.remove("scrolled-dark");
+      } else if (scrollY > 20) {
+        headerNav.classList.remove("scrolled");
+        headerNav.classList.add("scrolled-dark");
       } else {
         headerNav.classList.remove("scrolled");
+        headerNav.classList.remove("scrolled-dark");
       }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
     handleScroll(); // Initial check
   }
 

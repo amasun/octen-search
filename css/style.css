@@ -132,10 +132,9 @@
    -------------------------------------------------------------------------- */
 #hero {
   position: relative;
-  background-color: #FFFFFF;
-  background-image: none;
-  background: #FFFFFF;
-  color: #101828;
+  background-color: #080B12;
+  background: linear-gradient(180deg, rgba(17, 70, 43, 0.6) 0%, rgba(8, 11, 18, 0) 100%), #080B12;
+  color: #FFFFFF;
   padding-top: 160px;
   padding-bottom: 100px;
   overflow: hidden;
@@ -143,27 +142,40 @@
 }
 
 .hero-glow-container {
-  display: none;
+  display: block;
+  position: absolute;
+  width: 2002px;
+  height: 323px;
+  left: calc(50% - 1001px);
+  top: -219.56px;
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+  opacity: 0.6;
 }
 
 .glow-ellipse-green {
   position: absolute;
-  inset: 0;
-  background: #19804B;
+  left: 0.02%;
+  right: 0.03%;
+  top: 0;
+  bottom: 0;
+  background: #2D985E;
   border-radius: 50%;
-  filter: blur(180px);
+  filter: blur(200px);
+  pointer-events: none;
 }
 
 .glow-ellipse-accent {
   position: absolute;
-  top: 15%;
-  left: 20%;
-  right: 20%;
-  bottom: 15%;
+  left: 22.61%;
+  right: 22.62%;
+  top: 22.6%;
+  bottom: 22.6%;
   background: #F4FE38;
   border-radius: 50%;
-  opacity: 0.35;
-  filter: blur(110px);
+  filter: blur(100px);
+  pointer-events: none;
 }
 
 /* Hero 3D Orbit Canvas Background (Converge.AI Inspired) */
@@ -220,7 +232,8 @@
   font-weight: 500;
   line-height: 1.16;
   letter-spacing: -0.02em;
-  color: #101828;
+  color: #FFFFFF;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
   margin-bottom: 20px;
 }
 
@@ -231,7 +244,7 @@
 .hero-subtitle {
   font-size: clamp(16px, 1.4vw, 18px);
   line-height: 1.5;
-  color: rgb(118, 118, 118);
+  color: rgba(255, 255, 255, 0.85);
   max-width: 440px;
   width: 100%;
   margin: 0 auto 28px;
@@ -239,8 +252,8 @@
 }
 
 .hero-subtitle .highlight-credit {
-  color: #039855;
-  font-weight: 600;
+  color: #70FE7E;
+  font-weight: 700;
 }
 
 /* Hero CTA Buttons - Aligned with octen.ai (flex items-center gap-3) */
@@ -256,7 +269,7 @@
 .hero-credit-note {
   font-family: var(--font-sans);
   font-size: 14px;
-  color: #717680;
+  color: rgba(255, 255, 255, 0.65);
   opacity: 1;
   margin-top: 14px;
   text-align: center;
@@ -268,7 +281,7 @@
 .hero-ctas:has(.btn-hero-primary:hover) + .hero-credit-note,
 .hero-content:has(.btn-hero-primary:hover) .hero-credit-note,
 .hero-credit-note.is-highlighted {
-  color: #039855;
+  color: #70FE7E;
   opacity: 1;
 }
 
@@ -279,9 +292,9 @@
   gap: 6px;
   height: 48px;
   padding: 0 22px;
-  background: #100F09;
-  color: #FFFFFF;
-  border: 1px solid #100F09;
+  background: #FFFFFF;
+  color: #100F09;
+  border: 1px solid #FFFFFF;
   border-radius: 8px;
   font-family: var(--font-sans);
   font-size: 18px;
@@ -291,14 +304,15 @@
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 0 20px rgba(112, 254, 126, 0.12);
 }
 
 .btn-hero-primary:hover {
-  background: #262626;
-  border-color: #262626;
-  color: #FFFFFF;
-  box-shadow: 0 4px 14px rgba(16, 24, 40, 0.12);
+  background: #F0F2F0;
+  border-color: #F0F2F0;
+  color: #100F09;
+  box-shadow: 0 4px 24px rgba(255, 255, 255, 0.25), 0 0 24px rgba(112, 254, 126, 0.25);
+  transform: translateY(-1px);
 }
 
 .btn-hero-primary .hero-arrow-icon,
@@ -306,7 +320,7 @@
   width: 20px;
   height: 20px;
   margin-right: -2px;
-  stroke: #FFFFFF;
+  stroke: #100F09;
   stroke-width: 2;
   flex-shrink: 0;
   transition: transform 0.2s ease;
@@ -324,9 +338,11 @@
   gap: 6px;
   height: 48px;
   padding: 0 22px;
-  background: #FFFFFF;
-  color: #1F242F;
-  border: 1px solid #D0D5DD;
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 8px;
   font-family: var(--font-sans);
   font-size: 18px;
@@ -339,9 +355,10 @@
 }
 
 .btn-hero-ghost:hover {
-  background: #F9FAFB;
-  border-color: #98A2B3;
-  color: #101828;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #FFFFFF;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 520px) {
@@ -2245,7 +2262,8 @@
   padding: 0;
 }
 
-.header-nav-exact.scrolled {
+.header-nav-exact.scrolled,
+.header-nav-exact.scrolled-dark {
   padding: 8px 8px;
 }
 
@@ -2264,6 +2282,16 @@
   border: 1px solid transparent;
   border-radius: 0;
   box-shadow: none;
+}
+
+.header-nav-exact.scrolled-dark .navbar-container-exact {
+  background: rgba(8, 11, 18, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  padding: 8px;
 }
 
 .header-nav-exact.scrolled .navbar-container-exact {
@@ -2285,13 +2313,13 @@
 }
 
 .nav-logo-dark {
-  display: none;
-}
-
-.nav-logo-light {
   display: flex;
   align-items: center;
   width: 100%;
+}
+
+.nav-logo-light {
+  display: none;
 }
 
 .header-nav-exact.scrolled .nav-logo-dark {
@@ -2339,13 +2367,13 @@
   font-weight: 500;
   font-size: 14px;
   transition: all 0.2s ease-out;
-  color: #181D27;
+  color: rgba(255, 255, 255, 0.90);
   text-decoration: none;
 }
 
 .nav-item-link:hover {
-  color: #0F172B;
-  background-color: rgba(0, 0, 0, 0.05);
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.10);
 }
 
 .nav-chevron {
@@ -2358,10 +2386,11 @@
 }
 
 .header-nav-exact.scrolled .nav-item-link {
-  color: #0F172B;
+  color: #181D27;
 }
 
 .header-nav-exact.scrolled .nav-item-link:hover {
+  color: #0F172B;
   background-color: #f1f5f9;
 }
 
@@ -2778,12 +2807,14 @@
   user-select: none;
   text-decoration: none;
   cursor: pointer;
-  /* Light theme state (default for white hero) */
+  /* Dark theme state (default over dark hero matching 05-pricing) */
   width: 131px;
   height: 36px;
   padding: 6px 16px;
-  background: #0F172B;
-  border: 1px solid #0F172B;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.50);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   border-radius: 8px;
   font-family: var(--font-sans);
   font-weight: 600;
@@ -2793,8 +2824,8 @@
 }
 
 .nav-action-platform-btn:hover {
-  background: #1E293B;
-  border-color: #1E293B;
+  background: rgba(255, 255, 255, 0.20);
+  border-color: rgba(255, 255, 255, 0.80);
 }
 
 .header-nav-exact.scrolled .nav-action-platform-btn {
