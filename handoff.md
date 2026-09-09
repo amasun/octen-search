@@ -970,6 +970,17 @@
     - `.api-step-inner` 激活状态过渡使用高质感贝塞尔曲线 `cubic-bezier(0.16, 1, 0.3, 1)`，未激活项保持克制的 `opacity: 0.28; transform: translateY(8px);`，悬浮时轻柔提亮至 `opacity: 0.55; transform: translateY(4px);`；
     - 在 [`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js) 中将滚动感知目标位置从 `window.innerHeight * 0.45` 优化至 `window.innerHeight * 0.48`，使左侧聚焦的高亮卡片视觉中心与右侧居中的 Sticky 固定卡片完美水平齐平，滚动激活响应更加敏捷、轻快、一体化。
 
+### (95) Four APIs Web Search 初始位置水平居中对齐右侧卡片 (Initial Center Alignment)
+- **需求**：web search 文字组默认的位置太靠下，应该初始位置就和右侧卡片水平居中对齐。
+- **原因剖析**：右侧 Sticky 卡片高度固定为 `480px`（垂直中心在 Y = 240px），此前左侧首项受视口相对单位（`vh`）与上下内边距影响，高度膨胀至 600px+，导致内容中心被推挤至 300px+ 处，初次加载或滚动到达该模块时，左侧 Web Search 明显低于右侧卡片。
+- **落实方案**：
+  - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中对首项配置专属规则 `.endpoints-api-step:first-child`：
+    - 高度锁定为与右侧 Sticky 卡片严格一致的 `height: 480px; min-height: 480px; padding: 0;`，并维持 `display: flex; justify-content: center;`；
+    - 使左侧 Web Search 文字组的垂直中心点与右侧卡片中心点在初始状态完全位于同一直线（Y = 240px），达到像素级的水平居中对齐；
+    - 后续步骤（Broad / Image / Video Search）保持紧凑的 `min-height: 380px; padding: 24px 0;`；
+    - 在 `@media (max-width: 1024px)` 移动端重置为 `height: auto; min-height: auto; padding: 28px 0;`，保证响应式布局健壮。
+  - 在 [`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js) 中将滚动感知视口锚点精准锁定为 `window.innerHeight * 0.5`（50vh），与右侧 `calc(50vh - 240px)` 的 Sticky 居中卡片 100% 同心同轴。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)

@@ -1169,7 +1169,7 @@
 }
 
 .endpoints-api-step {
-  min-height: 38vh;
+  min-height: 380px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1177,8 +1177,15 @@
   cursor: pointer;
 }
 
+/* First Step (Web Search): exact 480px height to horizontally center-align with right sticky card in initial position */
+.endpoints-api-step:first-child {
+  height: 480px;
+  min-height: 480px;
+  padding: 0;
+}
+
 .endpoints-api-step:last-child {
-  min-height: 48vh;
+  min-height: 420px;
   padding-bottom: 120px;
 }
 
@@ -2126,8 +2133,11 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  .endpoints-api-step {
+  .endpoints-api-step,
+  .endpoints-api-step:first-child,
+  .endpoints-api-step:last-child {
     min-height: auto;
+    height: auto;
     padding: 28px 0;
   }
   .api-step-inner {
