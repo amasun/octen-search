@@ -208,15 +208,11 @@ document.addEventListener("DOMContentLoaded", () => {
     heroPrimaryBtn.addEventListener("mouseleave", () => heroCreditNote.classList.remove("is-highlighted"));
   }
 
-  // 7. Production-grade Performance Metrics Scroll Parallax Reveal
+  // 7. Production-grade Performance Metrics (No Parallax)
   const performanceSection = document.getElementById("performance");
   const metricsUnified = document.querySelector(".metrics-overview-unified");
-  const benchmarkPanel = document.querySelector(".benchmark-panel");
-  const sectionTitle = performanceSection ? performanceSection.querySelector(".section-title") : null;
 
-  if (performanceSection && metricsUnified && benchmarkPanel) {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
+  if (performanceSection && metricsUnified) {
     const triggerNumbers = () => {
       const numberFlows = metricsUnified.querySelectorAll("number-flow[data-target-value]");
       numberFlows.forEach(nf => {
@@ -230,73 +226,18 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     };
 
-    const resetNumbers = () => {
-      const numberFlows = metricsUnified.querySelectorAll("number-flow[data-start-value]");
-      numberFlows.forEach(nf => {
-        const startVal = nf.getAttribute("data-start-value");
-        if (startVal !== null) {
-          const num = parseFloat(startVal);
-          if (!isNaN(num)) {
-            nf.value = num;
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            triggerNumbers();
+            observer.disconnect();
           }
-        }
-      });
-    };
-
-    if (prefersReducedMotion) {
-      performanceSection.classList.add("is-revealed");
-      triggerNumbers();
+        });
+      }, { threshold: 0.15 });
+      observer.observe(performanceSection);
     } else {
-      let isRevealed = false;
-      let isTicking = false;
-
-      const reveal = () => {
-        if (isRevealed) return;
-        isRevealed = true;
-        performanceSection.classList.add("is-revealed");
-        triggerNumbers();
-      };
-
-      const unreveal = () => {
-        if (!isRevealed) return;
-        isRevealed = false;
-        performanceSection.classList.remove("is-revealed");
-        resetNumbers();
-      };
-
-      const checkScroll = () => {
-        const titleRect = sectionTitle ? sectionTitle.getBoundingClientRect() : performanceSection.getBoundingClientRect();
-        const winHeight = window.innerHeight;
-
-        // Trigger reveal strictly when the title enters the upper half of the window (<= 52% of viewport height)
-        if (titleRect.top <= winHeight * 0.52 && titleRect.top > -800) {
-          reveal();
-        } else if (titleRect.top > winHeight * 0.72) {
-          // If user scrolls back up into previous section, reset so it can animate again next time
-          unreveal();
-        }
-        isTicking = false;
-      };
-
-      const onScroll = () => {
-        if (!isTicking) {
-          isTicking = true;
-          window.requestAnimationFrame(checkScroll);
-        }
-      };
-
-      window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", onScroll, { passive: true });
-
-      // Handle direct hash navigation or initial load
-      if (window.location.hash === "#performance") {
-        // Delay slightly (260ms) to let the user clearly see the full entrance transition unfold upon landing
-        setTimeout(() => {
-          reveal();
-        }, 260);
-      } else {
-        checkScroll();
-      }
+      triggerNumbers();
     }
   }
 

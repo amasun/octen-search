@@ -429,7 +429,7 @@
   margin-bottom: 56px;
 }
 
-/* Performance & Metrics Reveal Animation */
+/* Performance & Metrics Section Layout */
 .metrics-overview-unified {
   background: transparent;
   padding: 0;
@@ -438,78 +438,6 @@
   margin-bottom: 36px;
   position: relative;
   z-index: 1;
-  transform-origin: center center;
-  will-change: transform, opacity;
-  transform: translate3d(0, var(--metrics-offset-y, 60px), 0) scale(var(--metrics-scale, 0.80));
-  opacity: var(--metrics-opacity, 0);
-  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-#performance .section-head {
-  position: relative;
-  z-index: 4;
-}
-
-#performance .benchmark-panel {
-  will-change: transform;
-  transform: translate3d(0, var(--chart-offset-y, -180px), 0);
-  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@media (max-width: 768px) {
-  #performance .benchmark-panel {
-    transform: translate3d(0, var(--chart-offset-y, -120px), 0);
-  }
-}
-
-#performance .metric-bento-card {
-  will-change: transform;
-  transform: translate3d(0, var(--card-offset-y, 16px), 0);
-  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Revealed State: triggered when title reaches upper half of window */
-#performance.is-revealed .benchmark-panel {
-  transform: translate3d(0, 0px, 0) !important;
-}
-
-#performance.is-revealed .metrics-overview-unified {
-  transform: translate3d(0, 0px, 0) scale(1) !important;
-  opacity: 1 !important;
-}
-
-#performance.is-revealed .metric-bento-card {
-  transform: translate3d(0, 0px, 0) !important;
-}
-
-/* Center-out stagger sequence: middle cards expand first, outer cards follow */
-#performance.is-revealed .metric-bento-card:nth-child(2),
-#performance.is-revealed .metric-bento-card:nth-child(3) {
-  transition-delay: 0.03s;
-}
-
-#performance.is-revealed .metric-bento-card:nth-child(1),
-#performance.is-revealed .metric-bento-card:nth-child(4) {
-  transition-delay: 0.08s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .metrics-overview-unified,
-  #performance .metrics-overview-unified {
-    transform: none !important;
-    opacity: 1 !important;
-    transition: none !important;
-  }
-  .metric-bento-card,
-  #performance .metric-bento-card {
-    transform: none !important;
-    transition: none !important;
-  }
-  .benchmark-panel,
-  #performance .benchmark-panel {
-    transform: none !important;
-    transition: none !important;
-  }
 }
 
 .metrics-overview-grid {
@@ -638,14 +566,7 @@
   text-align: left;
   box-sizing: border-box;
   letter-spacing: 0;
-  will-change: transform;
-  transform: translate3d(0, calc(var(--metrics-offset-y, 0px) * var(--stagger-factor, 0)), 0);
 }
-
-.metric-bento-card:nth-child(1) { --stagger-factor: 0; }
-.metric-bento-card:nth-child(2) { --stagger-factor: 0.06; }
-.metric-bento-card:nth-child(3) { --stagger-factor: 0.12; }
-.metric-bento-card:nth-child(4) { --stagger-factor: 0.18; }
 
 .metric-bento-card:first-child {
   padding-left: 0;
@@ -795,7 +716,6 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  will-change: transform;
 }
 
 .benchmark-panel-header {

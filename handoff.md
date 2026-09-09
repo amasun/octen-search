@@ -900,6 +900,17 @@
     - 悬浮时卡片背景以柔和贝塞尔曲线微缩放（`scale(1.06)`），图标产生微妙向上浮动（`-2px`）。
     - `Early Access` 徽章默认常显（`opacity: 1, visibility: visible`，对齐 Figma 原型），在卡片 Hover 时伴随边框微提亮（`#70FE7E`）与光晕交互。
 
+### (90) 移除 Production-grade performance 视差滚动与位移动效 (Performance Parallax Removed)
+- **需求**：Production-grade performance 去掉视差效果。
+- **落实方案**：
+  - **CSS 静态化与纯净布局**：
+    - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中，彻底移除了 `.metrics-overview-unified` 的初始 `opacity: 0`、`transform: translate3d(...) scale(0.80)` 以及全部滚动状态类 `#performance.is-revealed` 动画规则。
+    - 移除了 `.metric-bento-card` 和 `.benchmark-panel` 上的 `will-change: transform;`、延迟阶梯差与滚动位移计算。
+    - 数字统计卡片与基准图表卡片全面恢复自然稳重的静态流式布局，无论用户何时何速滚动，均无任何吸附收缩、破格升起或位移晃动。
+  - **JS 视差监听与循环重置逻辑清理**：
+    - 在 [`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js) 中，彻底移除了 window scroll / resize 复杂监听器与正反向 `is-revealed` / `unreveal` 状态机。
+    - 保留轻量的一阶 `IntersectionObserver`，仅在区域进入视口时从容触发一次数字滚轮，平稳克制、零性能负担。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
