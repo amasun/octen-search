@@ -1224,6 +1224,19 @@
     - 粒子在旋转过程中自然从大标题文字背后钻出、从文字表面滑过、再没入文字背后，形成真实震撼的电影级行星环天体穿插纵深感；
     - 控制面板新增 `zSplitOffset`（3D 穿插分割面）滑块，支持实时微调前后穿透临界深度。
 
+### (120) 3D 前景球体半透明磨砂与文字实时背景模糊滤镜 (Frosted Glass Lens with Realtime Backdrop Blur)
+- **需求**：是否能让球体带透明度，且有背景透明效果，也就是在文字前时会让文字笔画变模糊。
+- **视觉原理与技术落地**：
+  - **GPU 原生 `backdrop-filter` 透镜架构**（[`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) & [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+    - 前景层使用轻量级 DOM 玻璃透镜池（`<div class="hero-orbit-lenses-front" id="heroOrbitLensesFront">`，`z-index: 7`）；
+    - 球体应用核心滤镜 `backdrop-filter: blur(10px) saturate(135%)` 与 `-webkit-backdrop-filter`；
+    - 配备通透翡翠绿径向渐变 `radial-gradient(circle at 34% 30%, rgba(112, 254, 126, 0.42) 0%, rgba(64, 145, 72, 0.65) 55%, rgba(20, 65, 30, 0.82) 100%)`、精致玻璃反光边框 `border: 1px solid rgba(112, 254, 126, 0.38)` 及内高光阴影；
+  - **毫秒级 60FPS/120FPS 动态渲染**（[`js/hero-orbit.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/hero-orbit.js)）：
+    - 预分配固定尺寸的透镜对象池（`orbPool`），零 GC 内存垃圾回收消耗；
+    - 结合 3D 投影坐标使用硬件加速的 `translate3d(x, y, 0)` 驱动球体轨迹；
+    - **文字笔画模糊效果**：当绿色球体旋转穿过白色标题文字（`Real-time search API for AI agents`）表面时，球体背后的文字笔画瞬间被物理级虚化模糊并附带晶莹剔透的翡翠绿折射，移开后文字自动恢复清晰锐利；
+    - **实时参数可调**：控制面板增加“文字磨砂模糊 Glass Blur”滑块，支持 0 ~ 24px 动态虚化半径微调。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)

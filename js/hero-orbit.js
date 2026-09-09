@@ -6,8 +6,9 @@
 (function () {
   function initHeroOrbit() {
     const hero = document.getElementById('hero');
-    // Support both dual-canvas 3D Sandwich mode and single canvas fallback
+    // Support both dual-canvas 3D Sandwich mode, DOM frosted glass lens mode, and fallback
     const canvasBack = document.getElementById('heroOrbitCanvasBack') || document.getElementById('heroOrbitCanvas');
+    const lensesFront = document.getElementById('heroOrbitLensesFront');
     const canvasFront = document.getElementById('heroOrbitCanvasFront');
     if (!hero || !canvasBack) return;
 
@@ -15,7 +16,7 @@
     const ctxFront = canvasFront ? canvasFront.getContext('2d') : null;
     if (!ctxBack) return;
 
-    const isSandwich = Boolean(ctxFront);
+    const isSandwich = Boolean(lensesFront || ctxFront);
 
     // --- Configuration Parameters ---
     const config = {
@@ -39,7 +40,25 @@
       introDuration: 1.8,           // Entrance transition in seconds
       zSplitOffset: 0,              // 3D Sandwich split threshold (Z offset relative to title plane)
       depthMode: 'sandwich',        // 'sandwich' (3D 穿插), 'behind' (全前置), 'front' (全后置)
+      glassBlur: 10,                // Frosted glass backdrop blur in px
+      glassSaturate: 135,           // Backdrop saturation in %
     };
+
+    // Pre-allocated pool of DOM glass orbs with realtime backdrop blur
+    const orbPool = [];
+    function setupOrbPool(count) {
+      if (!lensesFront) return;
+      lensesFront.innerHTML = '';
+      orbPool.length = 0;
+      for (let i = 0; i < count; i++) {
+        const orb = document.createElement('div');
+        orb.className = 'hero-glass-orb';
+        orb.style.display = 'none';
+        lensesFront.appendChild(orb);
+        orbPool.push(orb);
+      }
+    }
+    setupOrbPool(config.count);
 
     let width = 0;
     let height = 0;
@@ -175,38 +194,55 @@
 
       // 4. Render Dots across 3D Sandwich Layers
       const zThreshold = config.zSplitOffset || 0;
+      let frontOrbIdx = 0;
 
       for (const dot of dots) {
         if (dot.radius <= 0) continue;
 
-        let targetCtx = ctxBack;
-        if (isSandwich) {
-          if (config.depthMode === 'behind') {
-            targetCtx = ctxFront;
-          } else if (config.depthMode === 'front') {
-            targetCtx = ctxBack;
-          } else {
-            // True 3D Sandwich: front half (z >= zThreshold) renders on foreground canvas
-            targetCtx = (dot.z >= zThreshold) ? ctxFront : ctxBack;
+        const isFront = (isSandwich && (
+          config.depthMode === 'behind' ||
+          (config.depthMode === 'sandwich' && dot.z >= zThreshold)
+        ));
+
+        if (isFront && lensesFront) {
+          // Render as frosted glass orb in front of title (with backdrop-filter text blur)
+          if (frontOrbIdx < orbPool.length) {
+            const orb = orbPool[frontOrbIdx];
+            const diam = Math.max(6, Math.round(dot.radius * 2));
+            orb.style.display = 'block';
+            orb.style.width = `${diam}px`;
+            orb.style.height = `${diam}px`;
+            orb.style.transform = `translate3d(${(dot.x - dot.radius).toFixed(1)}px, ${(dot.y - dot.radius).toFixed(1)}px, 0)`;
+            orb.style.opacity = Math.min(1, dot.alpha).toFixed(3);
+            frontOrbIdx++;
           }
-        }
-
-        targetCtx.save();
-
-        if (dot.blur > 0.4) {
-          targetCtx.filter = `blur(${dot.blur.toFixed(1)}px)`;
         } else {
-          targetCtx.filter = 'none';
+          // Render on canvasBack (behind title or fallback)
+          const targetCtx = (isFront && ctxFront) ? ctxFront : ctxBack;
+          targetCtx.save();
+
+          if (dot.blur > 0.4) {
+            targetCtx.filter = `blur(${dot.blur.toFixed(1)}px)`;
+          } else {
+            targetCtx.filter = 'none';
+          }
+
+          targetCtx.globalAlpha = dot.alpha * 0.75;
+
+          targetCtx.fillStyle = config.dotColor;
+          targetCtx.beginPath();
+          targetCtx.arc(dot.x, dot.y, dot.radius, 0, twoPi);
+          targetCtx.fill();
+
+          targetCtx.restore();
         }
+      }
 
-        targetCtx.globalAlpha = dot.alpha;
-
-        targetCtx.fillStyle = config.dotColor;
-        targetCtx.beginPath();
-        targetCtx.arc(dot.x, dot.y, dot.radius, 0, twoPi);
-        targetCtx.fill();
-
-        targetCtx.restore();
+      // Hide unused orbs in pool
+      if (lensesFront) {
+        for (let j = frontOrbIdx; j < orbPool.length; j++) {
+          orbPool[j].style.display = 'none';
+        }
       }
 
       if (!prefersReducedMotion.matches) {
@@ -641,6 +677,7 @@
             get: () => config.count,
             set: (v) => {
               config.count = Math.round(Number(v));
+              setupOrbPool(config.count);
             }
           },
           {
@@ -667,6 +704,20 @@
             get: () => config.dofStrength,
             set: (v) => {
               config.dofStrength = Number(v);
+            }
+          },
+          {
+            id: 'glassBlur',
+            label: '文字磨砂模糊 Glass Blur',
+            hint: '球体滑过文字时背景文字笔画的虚化程度（px）',
+            min: 0,
+            max: 24,
+            step: 1,
+            unit: 'px',
+            get: () => config.glassBlur,
+            set: (v) => {
+              config.glassBlur = Number(v);
+              lensesFront?.style.setProperty('--glass-blur', `${v}px`);
             }
           }
         ]
@@ -824,6 +875,7 @@
   dofMinAlpha: 0.18,
   introDuration: 1.8,
   zSplitOffset: ${config.zSplitOffset},
+  glassBlur: ${config.glassBlur},
 };`;
 
       navigator.clipboard.writeText(codeSnippet).then(() => {
