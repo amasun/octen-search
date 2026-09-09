@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (scrollySteps.length > 0) {
     // 1. Scroll-spy tracking using viewport middle target
     const updateScrollySpy = () => {
-      const viewportTarget = window.innerHeight * 0.45;
+      const viewportTarget = window.innerHeight * 0.48;
       let closestIndex = 0;
       let minDistance = Infinity;
 

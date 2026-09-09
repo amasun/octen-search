@@ -1169,28 +1169,33 @@
 }
 
 .endpoints-api-step {
-  min-height: 58vh;
+  min-height: 38vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 48px 0;
+  padding: 24px 0;
   cursor: pointer;
 }
 
 .endpoints-api-step:last-child {
-  min-height: 72vh;
-  padding-bottom: 280px;
+  min-height: 48vh;
+  padding-bottom: 120px;
 }
 
 .api-step-inner {
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   opacity: 0.28;
-  transform: translateY(6px);
+  transform: translateY(8px);
 }
 
 .endpoints-api-step.is-active .api-step-inner {
   opacity: 1;
   transform: translateY(0);
+}
+
+.endpoints-api-step:not(.is-active):hover .api-step-inner {
+  opacity: 0.55;
+  transform: translateY(4px);
 }
 
 
@@ -1243,8 +1248,8 @@
 .api-step-desc {
   font-size: 16px;
   color: var(--text-muted, rgb(118, 118, 118));
-  line-height: 1.6;
-  margin-bottom: 24px;
+  line-height: 1.55;
+  margin-bottom: 18px;
   max-width: 460px;
 }
 
@@ -1252,8 +1257,8 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin: 0 0 24px 0;
+  gap: 10px;
+  margin: 0 0 18px 0;
   padding: 0;
 }
 

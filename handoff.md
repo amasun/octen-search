@@ -957,6 +957,19 @@
     - 移除了冗余的 `.pricing-card-icon` 与 `.pricing-card-icon svg` 样式规则；
     - 将 `.pricing-bento-card` 最小高度从 `180px` 紧凑优化为 `140px`，卡片内仅保留顶部的「API 标题 + 徽章」与底部的「价格信息」，呼吸感适中，视觉层次更加干净利落，100% 对齐 `05-pricing` 的极简工匠品质。
 
+### (94) Four APIs 视差滚动优化与左侧文字组紧凑化 (Scrollytelling Spacing Compacted)
+- **需求**：One search engine for every modality 部分 修改视差滚动效果，让左侧文字组上下间距更紧凑。
+- **落实方案**：
+  - **大幅收窄文字块垂直间距与空隙**：
+    - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中，将每个步骤卡片 `.endpoints-api-step` 的高度规范由宽泛的 `min-height: 58vh; padding: 48px 0;` 紧凑优化为 `min-height: 38vh; padding: 24px 0;`。
+    - 将末尾项 `:last-child` 过于松散的 `min-height: 72vh; padding-bottom: 280px;` 优化为 `min-height: 48vh; padding-bottom: 120px;`，彻底消除了末尾数百像素的空白虚位。
+  - **紧凑内部文字层级留白**：
+    - `.api-step-desc` 底部外边距由 `24px` 优化为 `18px`，行高由 `1.6` 微调至 `1.55`；
+    - `.api-step-features` 间距由 `gap: 12px; margin-bottom: 24px;` 优化为 `gap: 10px; margin-bottom: 18px;`。
+  - **更细腻的视差微动效与视口中线对齐**：
+    - `.api-step-inner` 激活状态过渡使用高质感贝塞尔曲线 `cubic-bezier(0.16, 1, 0.3, 1)`，未激活项保持克制的 `opacity: 0.28; transform: translateY(8px);`，悬浮时轻柔提亮至 `opacity: 0.55; transform: translateY(4px);`；
+    - 在 [`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js) 中将滚动感知目标位置从 `window.innerHeight * 0.45` 优化至 `window.innerHeight * 0.48`，使左侧聚焦的高亮卡片视觉中心与右侧居中的 Sticky 固定卡片完美水平齐平，滚动激活响应更加敏捷、轻快、一体化。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
