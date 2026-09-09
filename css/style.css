@@ -311,7 +311,7 @@
   background: rgba(96, 255, 112, 0.10);
   border-color: #60FF70;
   color: #60FF70;
-  box-shadow: 0 0 20px rgba(96, 255, 112, 0.20);
+  box-shadow: none;
 }
 
 .btn-hero-primary:active {
