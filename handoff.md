@@ -872,6 +872,14 @@
 - **落实方案**：
   - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中，为 `.metrics-overview-grid` 增加 `padding-left: 20px;` 与 `box-sizing: border-box;`，使数字网格首列与版心容器及下方图表内部保持视觉内收与对齐呼吸感。
 
+### (88) 项目代码开源与推送到 GitHub (Git Init & GitHub Remote Push)
+- **需求**：上传github。
+- **落实方案**：
+  - 配置标准 `.gitignore` 过滤系统缓存与临时文件。
+  - 初始化本地 Git 仓库，建立 `main` 主分支，完成首个全量结构化 Commit。
+  - 通过 `gh repo create amasun/octen-search --public` 创建远端公共仓库并成功推送全量代码。
+  - **仓库地址**：[https://github.com/amasun/octen-search](https://github.com/amasun/octen-search)
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
