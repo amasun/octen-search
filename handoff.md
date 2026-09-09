@@ -1158,6 +1158,21 @@
     - 字号由 `16px` 优化为 **`14px`**（符合偶数规范）；
     - 文本颜色精确对齐为 **`#A4A4A4`**，排版视觉更加工整、舒展且细腻。
 
+### (114) 卡片右侧新增绿色浮动进度条 (Floating Step Progress Bar)
+- **需求**：在卡片右侧增加浮动进度条，样式参考图，但是要绿色色调。
+- **落实方案**：
+  - **组件架构**（[`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html)）：
+    - 在 `.sticky-frame-wrapper` 内部、右侧卡片 `.sticky-frame-box` 旁插入浮动进度容器 `<div class="card-floating-progress" id="endpoints-progress">`，随 Sticky 卡片在视口中常驻居中；
+    - 包含 4 个阶段导航项（`01` Web Search、`02` Broad Search、`03` Image Search、`04` Video Search）。
+  - **绿色系高精度像素级还原**（[`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+    - **未激活态**：6px 圆形小灰点（`#D1D5DB`），鼠标悬停提供放大（scale 1.3）与加深反馈（`#9CA3AF`）；
+    - **激活态纵向胶囊条**：平滑展开为 `6px × 72px` 圆角胶囊药丸，底轨为浅灰 `#E5E7EB`；内部配置绿色渐变流体填充条（`linear-gradient(180deg, #10B981, #039855)`）；
+    - **绿色数字编号**：在激活胶囊右侧上方优雅浮现两位数标识（如 `01`、`02`、`03`、`04`），字体为等宽代码字体 `var(--font-mono)`、字号 `14px`、字重 `600`、颜色 `#039855`，完全复刻参考图样式；
+    - **响应式防溢出**：桌面端网格配置 `padding-right: 48px;` 确保进度条绝不触碰右边界，移动端 `@media (max-width: 1024px)` 自动平滑隐藏。
+  - **动态滚动监听与交互**（[`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js)）：
+    - 随着页面向下滚动，当前项胶囊条内的绿色填充高度随滚动进度实时平滑填充（0% ➔ 100%）；
+    - 支持点击任意圆点或进度条，平滑滚动至对应的 API 叙事阶段。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)

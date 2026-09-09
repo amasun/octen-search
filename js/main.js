@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 2. Four APIs Sticky Scrollytelling Controller (x.ai/grok style)
   const scrollySteps = document.querySelectorAll('.endpoints-api-step');
   const scrollySlots = document.querySelectorAll('.sticky-graphic-slot');
+  const progressItems = document.querySelectorAll('.progress-step-item');
   let activeStepIndex = -1;
 
   function setScrollyActive(index) {
@@ -66,11 +67,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     scrollySteps.forEach((step, i) => {
       step.classList.toggle('is-active', i === index);
-      step.classList.toggle('is-passed', i < index);
     });
 
     scrollySlots.forEach((slot, i) => {
       slot.classList.toggle('active', i === index);
+    });
+
+    progressItems.forEach((item, i) => {
+      const isActive = i === index;
+      item.classList.toggle('active', isActive);
+      const fill = item.querySelector('.progress-step-fill');
+      if (fill && !isActive) {
+        fill.style.height = i < index ? '100%' : '0%';
+      }
     });
   }
 
@@ -92,6 +101,19 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       setScrollyActive(closestIndex);
+
+      // Compute fine scroll progress within active step for dynamic green fill
+      const activeStep = scrollySteps[closestIndex];
+      if (activeStep) {
+        const rect = activeStep.getBoundingClientRect();
+        const stepTotal = rect.height;
+        const stepPassed = viewportTarget - rect.top;
+        const ratio = Math.max(0.15, Math.min(1, stepPassed / stepTotal));
+        const activeFill = document.querySelector(`.progress-step-item[data-step-index="${closestIndex}"] .progress-step-fill`);
+        if (activeFill) {
+          activeFill.style.height = `${(ratio * 100).toFixed(1)}%`;
+        }
+      }
     };
 
     window.addEventListener('scroll', updateScrollySpy, { passive: true });
@@ -106,6 +128,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!isNaN(idx)) {
           setScrollyActive(idx);
           step.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    });
+
+    // 3. Click on floating progress item to smooth-scroll
+    progressItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const idx = parseInt(item.dataset.stepIndex, 10);
+        if (!isNaN(idx) && scrollySteps[idx]) {
+          setScrollyActive(idx);
+          scrollySteps[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       });
     });

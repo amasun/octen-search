@@ -1170,6 +1170,7 @@
   gap: 64px;
   position: relative;
   margin-top: 24px;
+  padding-right: 48px;
 }
 
 /* Left Column: API Step Blocks */
@@ -1423,6 +1424,100 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   Floating Step Progress Bar (Right Side of Sticky Card, Green Tone)
+   -------------------------------------------------------------------------- */
+.card-floating-progress {
+  position: absolute;
+  left: calc(100% + 20px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  z-index: 25;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.progress-step-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  cursor: pointer;
+  padding: 4px 0;
+  width: 44px; /* Reserves space for two-digit number */
+}
+
+/* Inactive Dot: 6px round indicator */
+.progress-step-bar {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: #D1D5DB;
+  transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease,
+              transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.progress-step-item:hover:not(.active) .progress-step-bar {
+  background-color: #9CA3AF;
+  transform: scale(1.3);
+}
+
+/* Active Step: Expands smoothly into vertical pill bar */
+.progress-step-item.active .progress-step-bar {
+  width: 6px;
+  height: 72px;
+  border-radius: 9999px;
+  background-color: #E5E7EB;
+  overflow: hidden;
+}
+
+/* Dynamic Green Fill within Active Pill Bar */
+.progress-step-fill {
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, #10B981 0%, #039855 100%);
+  border-radius: 9999px;
+  transition: height 0.08s linear;
+}
+
+/* Two-digit Step Number (01, 02, 03, 04) - Aligned to top-right of active bar */
+.progress-step-num {
+  position: absolute;
+  left: 16px;
+  top: 2px;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  color: #039855;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-4px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  white-space: nowrap;
+}
+
+.progress-step-item.active .progress-step-num {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+@media (max-width: 1024px) {
+  .card-floating-progress {
+    display: none;
+  }
 }
 
 /* Graphic Slots inside Sticky Frame Box */
