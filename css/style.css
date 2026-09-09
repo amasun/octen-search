@@ -2685,8 +2685,7 @@
   width: 100%;
 }
 
-/* Active Search item in Figma design + hover states */
-.nav-product-link[data-product="web"],
+/* Hover and focus-visible states for product links */
 .nav-product-link:hover,
 .nav-product-link:focus-visible {
   background-color: #F7F7F7;

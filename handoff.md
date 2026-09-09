@@ -1181,6 +1181,12 @@
     - `.sticky-graphic-slot` 调整为纵向弹性排列 `flex-direction: column; gap: 8px;`；
     - `.slot-placeholder-desc` 配置为清晰柔和的副说明样式：`font-size: 14px; font-weight: 400; line-height: 1.4; color: #8B8B8B; letter-spacing: -0.01em;`，完美匹配占位展示诉求。
 
+### (116) 导航下拉菜单 Search 浅灰底色改为纯 hover/focus 呈现 (Navbar Search Hover Effect)
+- **需求**：navbar menu中search下的灰色背景为hover效果，默认不出现，更新github。
+- **落实方案**（[`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+  - 移除了 `.nav-product-link[data-product="web"]` 的默认固定 `#F7F7F7` 背景选择器；
+  - 默认状态下与其它产品项保持纯净透明背景（`background-color: transparent`），仅在鼠标悬停（`:hover`）或获得焦点（`:focus-visible`）时平滑触发 `#F7F7F7` 浅灰反馈底色。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
