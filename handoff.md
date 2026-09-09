@@ -1005,6 +1005,12 @@
     `One single key for every modality — ranked passages, visual assets, and video timestamps.`
   - 将原有冗余的两句话合二为一，开篇以核心关键词 `One single key` 切入，破折号后自然承接三大多模态输出物，视觉更轻盈，文案更干练。
 
+### (99) Search API 左侧文字特性 check 图标更新为黑色实心圆底白勾矢量图标
+- **需求**：左侧文字的check图标改为 16x16 黑色圆底白勾 SVG 图标。
+- **落实方案**：
+  - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中，将 Search API 左侧全部 13 个特性列表项（`.api-step-feature-item`）中的原细线绿色 check 图标，全量替换为用户提供的黑色实心圆底白勾矢量图标（`16x16`，黑色圆盘搭配白色内勾）；
+  - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中清理了 `.feature-icon` 的冗余绿色定义，优化 `margin-top: 2.5px; display: block;`，使实心小黑标与首行 14px 加粗标题达到完美的垂直几何中心对齐。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
