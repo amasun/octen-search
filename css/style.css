@@ -1312,6 +1312,27 @@
   margin-right: 6px;
 }
 
+/* Colorless / Neutral Badge for Default Features */
+.feature-badge-default {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  padding: 0 6px;
+  margin-right: 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  color: #717680;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  vertical-align: 1px;
+  user-select: none;
+  letter-spacing: -0.01em;
+}
+
 .feature-desc {
   color: var(--text-muted, rgb(118, 118, 118));
 }

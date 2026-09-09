@@ -1132,6 +1132,15 @@
     - 移除了已滚动项强制 `opacity: 0` 的消失规则，恢复为高雅的未激活淡化（`opacity: 0.28`），激活项高亮（`opacity: 1`），全篇结构清晰连贯；
     - 右侧卡片吸顶偏移量优化为 `top: max(88px, calc(50vh - 240px));`，在视口垂直居中，右侧视觉图形完全纯净无暇。
 
+### (111) Web Search Highlights 新增无色 default 特性标签 (Highlights Default Badge)
+- **需求**：web search Highlights 中增加一个无色标签，里面写default。
+- **落实方案**：
+  - **HTML 结构**（[`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html)）：在 Web Search 的 Highlights 特性标题右侧追加 `<span class="feature-badge-default">default</span>`；
+  - **无色中性风格样式**（[`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+    - 采用极简中性无彩色系：`background: rgba(0, 0, 0, 0.04); border: 1px solid rgba(0, 0, 0, 0.08); color: #717680;`；
+    - 字体规范：`font-family: var(--font-mono); font-size: 10px; font-weight: 500; line-height: 1; letter-spacing: -0.01em;`；
+    - 尺寸与对齐：高度 `18px`，内边距 `0 6px`，圆角 `4px`，与标题及说明文字紧凑平齐（`vertical-align: 1px; margin-right: 6px;`），呈现克制专业的开发者标签质感。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
