@@ -1173,6 +1173,14 @@
     - 随着页面向下滚动，当前项胶囊条内的绿色填充高度随滚动进度实时平滑填充（0% ➔ 100%）；
     - 支持点击任意圆点或进度条，平滑滚动至对应的 API 叙事阶段。
 
+### (115) 右侧占位卡片标题下方新增“（动画图示）”说明文字 (Slot Placeholder Description)
+- **需求**：右侧占位卡片中增加除了写类似web search标题，下面增加说明文字（动画图示）四个字。
+- **落实方案**：
+  - **HTML 结构**（[`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html)）：在 4 个 `.sticky-graphic-slot` 槽位中的 `.slot-placeholder-title` 下方均增加 `<div class="slot-placeholder-desc">（动画图示）</div>`；
+  - **样式定义**（[`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+    - `.sticky-graphic-slot` 调整为纵向弹性排列 `flex-direction: column; gap: 8px;`；
+    - `.slot-placeholder-desc` 配置为清晰柔和的副说明样式：`font-size: 14px; font-weight: 400; line-height: 1.4; color: #8B8B8B; letter-spacing: -0.01em;`，完美匹配占位展示诉求。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
