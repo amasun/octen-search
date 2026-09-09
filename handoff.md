@@ -1187,6 +1187,21 @@
   - 移除了 `.nav-product-link[data-product="web"]` 的默认固定 `#F7F7F7` 背景选择器；
   - 默认状态下与其它产品项保持纯净透明背景（`background-color: transparent`），仅在鼠标悬停（`:hover`）或获得焦点（`:focus-visible`）时平滑触发 `#F7F7F7` 浅灰反馈底色。
 
+### (117) Pay-as-you-go 按钮 Hover 样式全面对齐 Web Search 标准 (Pricing Button Hover Alignment)
+- **需求**：Web Search 中 btn的hover样式和Pay-as-you-go 中btn样式对齐，以web search的为准。
+- **落实方案**：
+  - **移除多余伪元素动效**（[`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html)）：
+    - 移除 Pay-as-you-go 标题区 CTA 按钮上的 `.btn-dark-hover` 与 `.btn-light-hover`，彻底消除原有径向光晕、位移阴影等不一致干扰；
+  - **精确继承 Web Search 胶囊基准规范**（[`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+    - **通用规范**：`border-radius: 9999px; font-size: 14px; font-weight: 500; line-height: 1; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);`，按压态 `:active { transform: scale(0.97); }`；
+    - **Primary 主按钮**（Get started）：
+      - 默认：`background-color: #0F172A; border: 1px solid #0F172A; color: #FFFFFF;`；
+      - Hover：`background-color: #1E293B; border-color: #1E293B; color: #FFFFFF;`；
+    - **Secondary 次按钮**（Request Access）：
+      - 默认：`background-color: #FFFFFF; border: 1px solid rgba(15, 23, 42, 0.16); box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04); color: #0F172A;`；
+      - Hover：`background-color: #F8FAFC; border-color: rgba(15, 23, 42, 0.32); color: #0F172A;`；
+    - **防护样式**：增加防御性样式规则，防止任何外部类对按钮引入 translateY 或径向光晕残留。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)

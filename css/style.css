@@ -1785,19 +1785,19 @@
   box-sizing: border-box;
 }
 
-/* Pricing Card Buttons - Exact from 05-pricing QPS Plan */
+/* Pricing Card Buttons - Aligned with Search API (Web Search) button style benchmark */
 .pricing-card-btn {
   width: 100%;
   height: 40px;
-  padding: 0 17px;
+  padding: 0 16px;
   border-radius: 9999px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-sans);
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
   text-decoration: none;
   cursor: pointer;
   user-select: none;
@@ -1814,27 +1814,42 @@
   box-shadow: 0 0 0 2px #039855;
 }
 
+/* Primary Capsule: Dark/Black Solid (Identical to .api-step-btn-primary) */
 .pricing-card-btn-primary {
-  background-color: #100F09;
+  background-color: #0F172A;
   color: #FFFFFF !important;
-  border: 1px solid transparent;
+  border: 1px solid #0F172A;
 }
 
 .pricing-card-btn-primary:hover {
+  background-color: #1E293B;
+  border-color: #1E293B;
   color: #FFFFFF !important;
 }
 
+/* Secondary Capsule: Clean White Outline (Identical to .api-step-btn-secondary) */
 .pricing-card-btn-secondary {
   background-color: #FFFFFF;
-  color: var(--text-main, #100F09) !important;
-  border: 1px solid rgba(26, 26, 25, 0.16);
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  color: #0F172A !important;
+  border: 1px solid rgba(15, 23, 42, 0.16);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
 }
 
 .pricing-card-btn-secondary:hover {
-  background-color: #FFFFFF;
-  border-color: rgba(26, 26, 25, 0.28);
-  color: var(--text-main, #100F09) !important;
+  background-color: #F8FAFC;
+  border-color: rgba(15, 23, 42, 0.32);
+  color: #0F172A !important;
+}
+
+/* Safety overrides against any residual btn-dark-hover / btn-light-hover */
+.pricing-card-btn.btn-dark-hover::before,
+.pricing-card-btn.btn-light-hover::before {
+  display: none !important;
+}
+.pricing-card-btn.btn-dark-hover:hover,
+.pricing-card-btn.btn-light-hover:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 /* Inner Policy Banner matching Figma 13588:119119 Spec */
