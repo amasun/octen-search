@@ -1020,6 +1020,14 @@
   - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中：
     - 将 `.api-step-actions` 的横向链接间距调优为 `gap: 16px`，确保双链接排布整齐呼吸自如。
 
+### (101) Search API 左侧文字移除 Hover 上下跳动微动效 (Remove Hover Jitter)
+- **需求**：左侧文字hover时会跳动，去掉跳动的动效。
+- **落实方案**：
+  - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中：
+    - 移除了 `.api-step-inner` 及其激活态（`.is-active`）、悬浮态（`:hover`）上的全部 `transform: translateY(...)` 位移属性；
+    - 将过渡动画从包含 `transform` 的双属性过渡精简为纯粹的 `transition: opacity 0.35s ease;`；
+    - 鼠标悬浮或滚动切换时，文字块位置严格锁定静止，仅通过轻柔的透明度渐变（未激活 0.28 ➔ 悬浮 0.55 ➔ 激活 1.0）表达交互反馈，彻底消除垂直跳动与抖动感。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)

@@ -1190,19 +1190,16 @@
 }
 
 .api-step-inner {
-  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.35s ease;
   opacity: 0.28;
-  transform: translateY(8px);
 }
 
 .endpoints-api-step.is-active .api-step-inner {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .endpoints-api-step:not(.is-active):hover .api-step-inner {
   opacity: 0.55;
-  transform: translateY(4px);
 }
 
 
