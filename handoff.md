@@ -1011,6 +1011,15 @@
   - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中，将 Search API 左侧全部 13 个特性列表项（`.api-step-feature-item`）中的原细线绿色 check 图标，全量替换为用户提供的黑色实心圆底白勾矢量图标（`16x16`，黑色圆盘搭配白色内勾）；
   - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中清理了 `.feature-icon` 的冗余绿色定义，优化 `margin-top: 2.5px; display: block;`，使实心小黑标与首行 14px 加粗标题达到完美的垂直几何中心对齐。
 
+### (100) Search API 底部跳转操作链接调整 (View Docs Integration)
+- **需求**：[Open Platform Explorer ↗](https://octen.ai/platform/search) 改为view docs，[Request Access ↗](mailto:support@octen.ai?subject=Octen%20Image%20Search%20Early%20Access) 右侧增加view docs。
+- **落实方案**：
+  - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中：
+    - **Web Search 步骤**：将原有的 `Open Platform Explorer ↗` 链接更新为直达 Search API 参考文档的 `View docs ↗`（指向 `https://docs.octen.ai/api-reference/search`）；
+    - **Image Search 步骤**：在现有的 `Request Access ↗` 链接右侧并列增设 `View docs ↗`（指向 `https://docs.octen.ai`），使用户既能申请内测权限，又能随时查阅文档规范。
+  - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中：
+    - 将 `.api-step-actions` 的横向链接间距调优为 `gap: 16px`，确保双链接排布整齐呼吸自如。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
