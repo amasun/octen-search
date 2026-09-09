@@ -1059,6 +1059,15 @@
     - 右侧卡片 `.sticky-frame-wrapper` 吸顶锚点提升为 `top: max(216px, calc(50vh - 220px));`，与吸顶主标题保持安全间距，杜绝遮挡；
     - 移动端 `@media (max-width: 1024px)` 自适应降级为常规流布局，保证各端体验一致。
 
+### (104) Search API 进一步微调加大文字组间距 (Refined Step Spacing)
+- **需求**：稍微加大每个文字组之间的间距。
+- **落实方案**：
+  - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中：
+    - 将 `.endpoints-api-step` 的最小高度提升至 `min-height: 640px;`，内边距调整为 `padding: 48px 0;`；
+    - 新增 `.endpoints-api-step + .endpoints-api-step { margin-top: 64px; }`，在相邻文字组之间增加 64px 的清晰外边距，文字组间距整体加大约 20%~25%；
+    - 首项保持 `.endpoints-api-step:first-child { height: 480px; min-height: 480px; margin-top: 0; }`，确保首个步骤初始状态与右侧卡片维持精确水平居中对齐；末项配置 `min-height: 560px; padding-bottom: 280px;`；
+    - 移动端 `@media (max-width: 1024px)` 相应配置 `.endpoints-api-step + .endpoints-api-step { margin-top: 24px; }`，保证紧凑与美观。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
