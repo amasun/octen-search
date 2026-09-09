@@ -1088,6 +1088,11 @@
     - 当用户每次向下滚动并将 `.metrics-overview-unified` 移入显示区（`entry.isIntersecting === true`）时，自动以波浪式优雅交错延迟（80ms, 130ms, 180ms, 230ms）启动 `nf.animated = true; nf.value = targetNum;`；
     - 无论是多次向下滚动浏览、还是向上回滚后再次滑入，每次都能流畅重现数字物理滚动跳动效果。
 
+### (107) 导航下拉菜单右侧栏标题文案修正 (Menu Column Title Update)
+- **需求**：menu中Application 改为Applications。
+- **落实方案**：
+  - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中将 Products 下拉面板右侧列标题从 `Application` 调整为复数形式 **`Applications`**，与左侧栏 `Capabilities` 的复数语法结构保持严格一致。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
