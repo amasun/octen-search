@@ -1218,14 +1218,17 @@
   margin-top: 64px;
 }
 
-/* First Step (Web Search): exact 480px height to horizontally center-align with right sticky card in initial position */
-.endpoints-api-step:first-child {
-  height: 480px;
-  min-height: 480px;
+/* First Step (Web Search): exact horizontal alignment with top of right card */
+.endpoints-api-step:first-of-type,
+.endpoints-api-step[data-api-index="0"] {
+  height: auto;
+  min-height: 520px;
+  justify-content: flex-start;
   padding: 0;
   margin-top: 0;
 }
 
+.endpoints-api-step:last-of-type,
 .endpoints-api-step:last-child {
   min-height: 560px;
   padding-bottom: 280px;
@@ -1272,7 +1275,7 @@
   font-size: 32px;
   font-weight: 600;
   color: var(--text-main, #0F172A);
-  margin-bottom: 12px;
+  margin: 0 0 12px 0;
   line-height: 1.2;
   letter-spacing: -0.02em;
   display: flex;
@@ -2228,7 +2231,9 @@
     margin-top: 0;
   }
   .endpoints-api-step,
+  .endpoints-api-step:first-of-type,
   .endpoints-api-step:first-child,
+  .endpoints-api-step:last-of-type,
   .endpoints-api-step:last-child {
     min-height: auto;
     height: auto;

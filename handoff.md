@@ -1105,6 +1105,16 @@
     - 获取菜单的 `getBoundingClientRect()`，若右边界超出视口（`rect.right > window.innerWidth - 16`），自动将 `dropdownMenu.style.left` 向左位移相应的溢出值（`-${overflow}px`）；
     - 若屏幕宽度收缩（`resize` 事件），自适应重新校验吸附；在超宽屏幕上自动归位 `0px`；既完美保全了 Figma 原生 821px 的大气质感，又杜绝了右侧被浏览器视口裁切或挤压的问题。
 
+### (109) Search API 区域左侧 Web Search 起始位置与右侧卡片顶部精确水平对齐 (Web Search Initial Alignment)
+- **需求**：回到Search API区域，左侧文字区域起始位置应该和右侧卡片水平对齐，目前Web Search 起始位置太靠下。
+- **问题根源定位**：
+  1. 原 CSS 使用了 `.endpoints-api-step:first-child` 作为特殊定位选择器；但由于在文字列顶部插入了 `<div class="scrolly-fade-mask-top">` 蒙版，导致实际的 Web Search 块变成了容器的第二个子元素（`:nth-child(2)`），`:first-child` 规则从未命中；
+  2. 未命中的 Web Search 继承了通用样式 `.endpoints-api-step { min-height: 640px; justify-content: center; padding: 48px 0; }`，在 640px 容器内垂直居中导致文字块被强行下压了约 170px；同时原 `h3.api-step-title` 带有浏览器默认的 `margin-block-start`（约 32px），使得整体视觉严重脱节下沉。
+- **落实方案**（[`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+  - **精准选择器重构**：将选择器修正为 `.endpoints-api-step:first-of-type, .endpoints-api-step[data-api-index="0"]`，彻底避免 DOM 蒙版节点干扰，100% 稳定命中 Web Search；
+  - **顶部平齐对齐**：将 `justify-content` 改为 `flex-start`，移除顶部 `padding: 0; margin-top: 0;`，并重置 `h3.api-step-title { margin: 0 0 12px 0; }` 去除默认外边距；
+  - **对齐效果**：进入 Search API 大区时，左侧 Web Search 标题/图标的顶部边缘与右侧 480px 矩形卡片的顶边边框处于完全一致的水平基准线上（Y = 0）；随着用户向下滚动时，文字顺畅向上移出并自然滚动切换至下一项。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
@@ -1122,5 +1132,6 @@
 1. **等待用户提供右侧 4 个插槽的替换内容**：
    - 收到具体内容后，在 `index.html` 中的 `.sticky-graphic-slot[data-slot-index="0..3"]` 填入对应的真实视觉内容（例如 SVG 交互图、数据演示、代码预览等）。
 2. **其他用户待提出的页面优化需求**。
+
 
 
