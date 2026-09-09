@@ -894,8 +894,7 @@
     - 生成并保存 4 张 4K 级别电影质感暗色背景纹理至 [`images/app-answer.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-answer.jpg)、[`images/app-deep-research.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-deep-research.jpg)、[`images/app-multimodal-chat.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-multimodal-chat.jpg)、[`images/app-grounded-generation.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-grounded-generation.jpg)。
   - **高级交互体验**：
     - 悬浮时卡片背景以柔和贝塞尔曲线微缩放（`scale(1.06)`），图标产生微妙向上浮动（`-2px`）。
-    - 文字标题在任何状态下保持纯白色（`color: #FFFFFF !important`），不发生突兀变色。
-    - `Early Access` 徽章默认透明隐藏（`opacity: 0`），仅在卡片 Hover 时平滑浮现（`opacity: 1`）；触屏设备保持常驻可见。
+    - `Early Access` 徽章默认常显（`opacity: 1, visibility: visible`，对齐 Figma 原型），在卡片 Hover 时伴随边框微提亮（`#70FE7E`）与光晕交互。
 
 ---
 
