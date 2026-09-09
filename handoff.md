@@ -1088,10 +1088,22 @@
     - 当用户每次向下滚动并将 `.metrics-overview-unified` 移入显示区（`entry.isIntersecting === true`）时，自动以波浪式优雅交错延迟（80ms, 130ms, 180ms, 230ms）启动 `nf.animated = true; nf.value = targetNum;`；
     - 无论是多次向下滚动浏览、还是向上回滚后再次滑入，每次都能流畅重现数字物理滚动跳动效果。
 
-### (107) 导航下拉菜单右侧栏标题文案修正 (Menu Column Title Update)
-- **需求**：menu中Application 改为Applications。
+### (108) 导航下拉菜单 100% 对齐 Figma 13590:139982 规范并配置智能视口防溢出吸附 (Figma 13590:139982 Pixel-Perfect Alignment & Smart Viewport Clamping)
+- **需求参考**：[Figma 设计稿节点 13590:139982](https://www.figma.com/design/jnIlRSuXffn5g2OxnsqYIE/Octen_%E6%B1%87%E6%80%BB?node-id=13590-139982&t=Z0uSptuLmVqwictA-4)。
+- **核心问题溯源**：
+  - 用户之前反馈“navbar 弹出menu的边界目前过大了”，实质是因为导航栏中 Products 位于屏幕中偏右侧，原绝对定位 `left: 0` 下一个宽达 821px 的菜单会在主流笔记本屏幕（如 1280px / 1366px）上超出浏览器右侧视口（发生水平溢出与截断）。
+  - 若单纯简单缩小卡片尺寸，则会破坏 Figma 原始设计比例；正确的工程解法是：**100% 还原 Figma 13590:139982 的设计标准，并结合动态智能视口边缘约束算法（Smart Viewport Clamping）**。
 - **落实方案**：
-  - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中将 Products 下拉面板右侧列标题从 `Application` 调整为复数形式 **`Applications`**，与左侧栏 `Capabilities` 的复数语法结构保持严格一致。
+  - **Figma 设计稿规格 100% 像素级对齐**（[`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+    - **外层容器**：宽度 `821px`，圆角 `12px`，内边距 `20px`，间距 `20px`，投影 `0px 12px 8px rgba(10, 13, 18, 0.08), 0px 4px 3px rgba(10, 13, 18, 0.03)`，边框 `#E9EAEB`；
+    - **左侧 Capabilities**：宽度 `307px`，栏目标题字号 `14px`（行高 `20px`，字重 600，颜色 `#717680`，内边距 `0 12px`），菜单项内边距 `10px`，当前选中项与悬停态背景 `#F7F7F7`，图标规范尺寸 `24px × 24px`，标题 `16px`（行高 `24px`），描述文字 `12px`（行高 `20px`，颜色 `#808080`）；
+    - **右侧 Applications**：宽度 `474px`，栏目标题 `Applications`（`14px`，`padding-left: 20px`），网格区域 `454.34px × 302px`，左侧配置半透明分割线 `border-left: 1px solid rgba(201, 201, 201, 0.5)`；
+    - **2×2 应用卡片**：精确尺寸 `210.67px × 145px`，圆角 `12px`，边框 `1px solid #EEEEEE`，背景蒙版图片透明度 `opacity: 0.5`（hover 时微缩放 `1.05` 并微亮 `opacity: 0.7`），中心图标 `30px × 30px`，标题文字 `16px`（颜色纯白 `#FFFFFF`，字重 500）；
+    - **Early Access 徽章**：`top: 3px; right: 3px; height: 24px; padding: 0 6px;`，背景 `rgba(90, 107, 90, 0.2)`，高斯模糊 `backdrop-filter: blur(5px)`，描边 `1px solid #6FD1A5`，圆角 `6px`，字号 `12px`，行高 `12px`，字符间距 `-1px`，颜色 `#70FE7E`（代码字体）。
+  - **动态智能视口边界防溢出约束**（[`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js)）：
+    - 在下拉菜单展开与悬停时实时执行 `clampDropdownBounds()`；
+    - 获取菜单的 `getBoundingClientRect()`，若右边界超出视口（`rect.right > window.innerWidth - 16`），自动将 `dropdownMenu.style.left` 向左位移相应的溢出值（`-${overflow}px`）；
+    - 若屏幕宽度收缩（`resize` 事件），自适应重新校验吸附；在超宽屏幕上自动归位 `0px`；既完美保全了 Figma 原生 821px 的大气质感，又杜绝了右侧被浏览器视口裁切或挤压的问题。
 
 ---
 
@@ -1101,7 +1113,7 @@
 - [`css/variables.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/variables.css)：全局主题变量与容器定义
 - [`css/animations.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/animations.css)：动效定义
 - [`js/hero-orbit.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/hero-orbit.js)：Hero 3D 球形环绕 Canvas 2D 渲染引擎
-- [`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js)：交互逻辑（Scroll-spy 监听器、FAQ 折叠等）
+- [`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js)：交互逻辑（Scroll-spy 监听器、FAQ 折叠、菜单防溢出、数据滚动等）
 - [`js/snippets.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/snippets.js)：各 API 请求/响应代码示例数据
 
 ---
@@ -1110,4 +1122,5 @@
 1. **等待用户提供右侧 4 个插槽的替换内容**：
    - 收到具体内容后，在 `index.html` 中的 `.sticky-graphic-slot[data-slot-index="0..3"]` 填入对应的真实视觉内容（例如 SVG 交互图、数据演示、代码预览等）。
 2. **其他用户待提出的页面优化需求**。
+
 

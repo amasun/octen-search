@@ -153,10 +153,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 5. Products Navigation Dropdown (Figma Node 13569:7315)
+  // 5. Products Navigation Dropdown (Figma Node 13590:139982)
   const productDropdown = document.querySelector(".nav-item-dropdown");
   if (productDropdown) {
     const trigger = productDropdown.querySelector(".nav-dropdown-trigger");
+    const dropdownMenu = productDropdown.querySelector(".nav-dropdown-menu");
+
+    const clampDropdownBounds = () => {
+      if (!dropdownMenu) return;
+      dropdownMenu.style.left = "0px";
+      const rect = dropdownMenu.getBoundingClientRect();
+      const padding = 16;
+      if (rect.right > window.innerWidth - padding) {
+        const overflow = rect.right - (window.innerWidth - padding);
+        dropdownMenu.style.left = `-${overflow}px`;
+      } else if (rect.left < padding) {
+        dropdownMenu.style.left = `${padding - rect.left}px`;
+      }
+    };
 
     const toggleDropdown = (open) => {
       const willOpen = typeof open === "boolean" ? open : !productDropdown.classList.contains("is-open");
@@ -164,7 +178,17 @@ document.addEventListener("DOMContentLoaded", () => {
       if (trigger) {
         trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
       }
+      if (willOpen) {
+        clampDropdownBounds();
+      }
     };
+
+    productDropdown.addEventListener("mouseenter", clampDropdownBounds);
+    window.addEventListener("resize", () => {
+      if (productDropdown.classList.contains("is-open")) {
+        clampDropdownBounds();
+      }
+    }, { passive: true });
 
     if (trigger) {
       trigger.addEventListener("click", (e) => {
