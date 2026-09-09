@@ -1028,6 +1028,19 @@
     - 将过渡动画从包含 `transform` 的双属性过渡精简为纯粹的 `transition: opacity 0.35s ease;`；
     - 鼠标悬浮或滚动切换时，文字块位置严格锁定静止，仅通过轻柔的透明度渐变（未激活 0.28 ➔ 悬浮 0.55 ➔ 激活 1.0）表达交互反馈，彻底消除垂直跳动与抖动感。
 
+### (102) Search API 步骤底部全量升级为双胶囊按钮形式 (Dual Capsule Buttons)
+- **需求**：应该每个文字区域底部都有两个按钮，分别是 playground 和 docs 没有权限的，会显示request access。同时目前的链接形式修改为胶囊按钮形式。
+- **落实方案**：
+  - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中：
+    - **Web Search**：配置主操作 `Playground`（实心黑胶囊）+ 辅助操作 `Docs`（纯白描边胶囊）；
+    - **Broad Search**：配置主操作 `Playground`（实心黑胶囊）+ 辅助操作 `Docs`（纯白描边胶囊）；
+    - **Image Search**（Early Access 无直接权限）：主操作自动展现为 `Request Access`（实心黑胶囊）+ 辅助操作 `Docs`（纯白描边胶囊）；
+    - **Video Search**（Early Access 无直接权限）：主操作自动展现为 `Request Access`（实心黑胶囊）+ 辅助操作 `Docs`（纯白描边胶囊）。
+  - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中：
+    - 新增 `.api-step-btn` 胶囊按钮标准：高度 `34px`、内边距 `0 16px`、偶数字号 `14px`、字重 `500`、完美圆角 `border-radius: 9999px`；
+    - 主按钮 `.api-step-btn-primary`：墨黑背景 `#0F172A`，悬浮提亮至 `#1E293B`；
+    - 辅助按钮 `.api-step-btn-secondary`：纯白背景加浅灰微边框 `rgba(15, 23, 42, 0.16)`，微弱投影与淡灰悬浮，形成严谨利落的高端工匠层级。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
