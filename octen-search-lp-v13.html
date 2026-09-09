@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search API for AI Agents — Web, Image, Video | Octen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A100D;--paper:#F5F6F4;--paper-2:#FFFFFF;
+  --line:#E2E5E0;--line-dark:#222C27;
+  --green:#0E9F6E;--green-bright:#16C784;
+  --coral:#E8543F;--coral-soft:#F5B5A9;
+  --muted:#6B7570;--muted-dark:#8C9A93;
+  --radius:14px;--maxw:1140px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Playfair Display',Georgia,serif;font-weight:600;letter-spacing:-.015em;line-height:1.08}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+section{padding:80px 0}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);margin-top:28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center}
+.metric{padding:20px 24px;border-right:1px solid var(--line)}
+.metric:last-child{border-right:none}
+.mv{font-size:28px;font-weight:700;letter-spacing:-.025em;line-height:1.05;white-space:nowrap}
+.mv em{font-style:normal;font-size:14px;font-weight:600;color:var(--muted);margin-left:2px}
+.mk{font-size:13.5px;font-weight:600;color:var(--ink);margin-top:10px;line-height:1.3}
+.ms{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+.dots{background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:22px 22px}
+.dots-dark{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px}
+.eyebrow{display:block;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.eyebrow.on-dark{color:var(--muted-dark)}
+h1.hero{font-size:clamp(38px,6vw,70px)}
+h2.big{font-size:clamp(28px,4vw,46px)}
+.lead{font-size:clamp(16px,1.25vw,18px);color:var(--muted);max-width:56ch}
+.lead.on-dark{color:var(--muted-dark)}
+
+nav{position:sticky;top:0;z-index:60;background:rgba(10,16,13,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-dark)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:'Playfair Display',Georgia,serif;font-size:21px;font-weight:600;color:#fff}
+.logo span{color:var(--green-bright)}
+.navlinks{display:flex;gap:26px}
+.navlinks a{color:var(--muted-dark);text-decoration:none;font-size:14px;font-weight:500}
+.navlinks a:hover{color:#fff}
+
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;text-decoration:none;padding:13px 24px;border-radius:999px;border:1px solid transparent;transition:background .15s,border-color .15s,transform .15s;cursor:pointer}
+.btn:focus-visible{outline:2px solid var(--green-bright);outline-offset:3px}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:#0c8a5f;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:#fff;border-color:var(--line-dark)}
+.btn-ghost:hover{border-color:var(--muted-dark)}
+.btn-outline{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-outline:hover{border-color:var(--ink)}
+.btn-sm{padding:9px 18px;font-size:14px}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{background:#1d2622;transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-outline:hover{border-color:var(--ink)}
+.prices{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:34px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pr{padding:22px 24px 22px 0;border-right:1px solid var(--line)}
+.pr:last-child{border-right:none}
+.pn{display:block;font-size:13.5px;color:var(--muted);margin-bottom:8px}
+.pv{font-size:27px;font-weight:700;letter-spacing:-.02em}
+.pv em{font-style:normal;font-size:13px;font-weight:500;color:var(--muted);margin-left:5px}
+.arrow{color:var(--green);text-decoration:none;font-weight:600;font-size:14px}
+.arrow:hover{text-decoration:underline}
+
+#hero{background:var(--ink);color:#fff;padding:104px 0 76px;text-align:center}
+#hero .lead{margin-left:auto;margin-right:auto}
+#hero .cta-row{justify-content:center}
+#hero .stats{justify-content:center}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:34px}
+.credit{font-size:13.5px;color:var(--muted-dark)}
+.stats{display:flex;flex-wrap:wrap;margin-top:52px;border-top:1px solid var(--line-dark)}
+.stat{padding:22px 30px 0;border-right:1px solid var(--line-dark)}
+.stat:last-child{border-right:none}
+.stat .v{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.stat .v .u{font-size:13px;font-weight:500;color:var(--muted-dark);margin-left:2px}
+.stat .k{font-size:12.5px;color:var(--muted-dark);margin-top:2px}
+
+/* response contract */
+.rows{margin-top:44px;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:130px 1fr;gap:32px;padding:26px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;border:1px solid var(--line);border-radius:5px;padding:3px 8px;background:var(--paper-2)}
+.tag.on{color:var(--green);border-color:rgba(14,159,110,.3);background:rgba(14,159,110,.07)}
+.row h4{font-size:17px;font-weight:600;margin-bottom:5px}
+.row p{font-size:14.5px;color:var(--muted);max-width:62ch}
+code.i{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:#EDEFEB;padding:2px 5px;border-radius:4px;color:var(--ink)}
+code.d{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:#1B2521;padding:2px 5px;border-radius:4px;color:#8DD9B4}
+
+/* performance */
+.panel{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:30px}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 34px;margin-top:6px}
+.fact{display:flex;gap:11px;align-items:flex-start;font-size:15px}
+.fact svg{flex:none;margin-top:5px}
+.note{font-size:12.5px;color:var(--muted);margin-top:18px;line-height:1.6}
+.note a{color:var(--green)}
+.pending{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9A6B00;background:#FFF6E0;border:1px dashed #E8C877;border-radius:5px;padding:3px 8px;display:inline-block}
+
+/* broad */
+#broad{background:var(--ink);color:#fff}
+.cost .v{font-family:'JetBrains Mono',monospace;font-size:27px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.cost .v.us{color:var(--green-bright)}
+.cost .k{font-size:11.5px;color:var(--muted-dark);letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+
+pre{background:#0D1512;color:#E6EDE9;border-radius:12px;padding:20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12.8px;line-height:1.7;border:1px solid var(--line-dark)}
+pre.on-paper{border-color:#1B2521}
+.k-str{color:#8DD9B4}.k-key{color:#9FC6FF}.k-num{color:#F5C877}.k-cm{color:#657A70}
+
+/* endpoint tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:36px}
+.tab{font-size:14px;font-weight:600;padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:var(--paper-2);color:var(--muted);cursor:pointer;font-family:inherit}
+.tab[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tab:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.tab .ea{font-size:10px;font-weight:600;color:var(--green);margin-left:6px}
+.tab[aria-selected="true"] .ea{color:var(--green-bright)}
+.pane{display:none;margin-top:30px}
+.pane.on{display:block}
+.pane-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:center}
+.rowsel{margin-top:24px;border-top:1px solid var(--line)}
+.rsel{display:block;width:100%;text-align:left;font-family:inherit;background:none;border:none;border-bottom:1px solid var(--line);padding:16px 14px 16px 0;cursor:pointer;position:relative;transition:padding-left .15s}
+.rsel::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:transparent;transition:background .15s}
+.rsel:hover .rt{color:var(--green)}
+.rsel.on::before{background:var(--green)}
+.rsel.on{padding-left:16px}
+.rsel:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
+.rsel .rt{display:block;font-size:16px;font-weight:600;color:var(--ink);margin-bottom:4px;transition:color .15s}
+.rsel .rd{display:block;font-size:13.5px;color:var(--muted);line-height:1.5}
+.rsel .tag{margin-bottom:8px}
+.codepanel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0D1512}
+.codehead{display:flex;align-items:center;gap:10px;padding:9px 12px 9px 14px;background:#111B17;border-bottom:1px solid #1B2521}
+.cpath{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8DD9B4;margin-right:auto;white-space:nowrap}
+.ctoggle{display:flex;background:#0A100D;border:1px solid #1B2521;border-radius:7px;padding:2px}
+.ctg{font-family:inherit;font-size:11.5px;font-weight:600;color:var(--muted-dark);background:none;border:none;border-radius:5px;padding:4px 10px;cursor:pointer}
+.ctg.on{background:#1E2A25;color:#fff}
+.ctg:focus-visible,.ccopy:focus-visible,.cplat:focus-visible{outline:2px solid var(--green-bright);outline-offset:1px}
+.ccopy{font-family:inherit;font-size:11.5px;font-weight:600;color:var(--muted-dark);background:none;border:1px solid #1B2521;border-radius:7px;padding:5px 11px;cursor:pointer;transition:color .15s,border-color .15s}
+.ccopy:hover{color:#fff;border-color:#35443D}
+.ccopy.done{color:var(--green-bright);border-color:rgba(22,199,132,.4)}
+.cplat{font-size:11.5px;font-weight:600;color:var(--muted-dark);text-decoration:none;padding:5px 4px;white-space:nowrap}
+.cplat:hover{color:var(--green-bright)}
+.snipbox{min-height:290px}
+.snipbox pre{margin:0;border:none;border-radius:0;background:#0D1512;min-height:290px}
+.snip-c,.snip-r{display:none}
+.snip-c.on,.snip-r.on{display:block}
+.hint{font-size:13px;color:var(--muted);margin-top:14px}
+.pane-kind{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:12px}
+.pane-kind b{color:var(--ink);font-weight:500}
+.pane h3{font-size:23px;font-weight:600;margin-bottom:8px}
+.pane p{font-size:15px;color:var(--muted);max-width:52ch}
+.snips{display:grid;gap:12px}
+.snip .lbl{font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:6px}
+
+details{border-bottom:1px solid var(--line-dark)}
+details:first-of-type{border-top:1px solid var(--line-dark)}
+summary{cursor:pointer;padding:20px 0;font-size:16.5px;font-weight:600;color:#fff;list-style:none;display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+summary::-webkit-details-marker{display:none}
+summary:focus-visible{outline:2px solid var(--green-bright);outline-offset:3px}
+.ico{flex:none;width:18px;height:18px;position:relative;margin-top:5px}
+.ico::before,.ico::after{content:'';position:absolute;background:var(--muted-dark);border-radius:2px;transition:transform .2s}
+.ico::before{top:8px;left:0;width:18px;height:2px}
+.ico::after{top:0;left:8px;width:2px;height:18px}
+details[open] .ico::after{transform:rotate(90deg)}
+.ans{padding:0 0 22px;font-size:15px;color:var(--muted-dark);max-width:76ch;line-height:1.7}
+
+.stackgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.scard{display:block;border:1px solid var(--line-dark);border-radius:var(--radius);padding:22px;text-decoration:none;background:rgba(255,255,255,.02);transition:border-color .15s,background .15s,transform .15s}
+.scard:hover{border-color:#35443D;background:rgba(255,255,255,.045);transform:translateY(-2px)}
+.scard:focus-visible{outline:2px solid var(--green-bright);outline-offset:3px}
+.scard .si{display:block;color:var(--green-bright);margin-bottom:16px}
+.scard .st{display:block;font-size:16px;font-weight:600;color:#fff;margin-bottom:7px}
+.scard .sa{color:var(--green-bright)}
+.scard .sd{display:block;font-size:13.5px;color:var(--muted-dark);line-height:1.55}
+#final{background:var(--ink);color:#fff;padding:88px 0}
+.trust{display:flex;gap:16px;flex-wrap:wrap;margin-top:38px;padding-top:24px;border-top:1px solid var(--line-dark);font-size:13px;color:var(--muted-dark);align-items:center}
+.trust a{color:var(--muted-dark)}
+footer{background:var(--ink);border-top:1px solid var(--line-dark);padding:24px 0;color:var(--muted-dark);font-size:12.5px}
+
+@media (max-width:920px){
+  .pane-head{grid-template-columns:1fr}
+  .snipbox,.snipbox pre{min-height:0}
+  .codehead{flex-wrap:wrap}
+  .stackgrid,.prices{grid-template-columns:repeat(2,1fr)}
+  .metrics{grid-template-columns:1fr}
+  .metric{padding:16px 0;border-right:none;border-bottom:1px solid var(--line)}
+  .metric:last-child{border-bottom:none}
+  .pr{padding-left:0}
+  .pr:nth-child(2){border-right:none}
+  .row{grid-template-columns:1fr;gap:12px}
+  section{padding:72px 0}
+  .navlinks{display:none}
+}
+@media (max-width:600px){
+  .stat{border-right:none;padding:14px 0}
+  .stackgrid,.prices{grid-template-columns:1fr}
+  .pr{border-right:none;border-bottom:1px solid var(--line)}
+  .pr:last-child{border-bottom:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">Oct<span>e</span>n</div>
+    <div class="navlinks">
+      <a href="#perf">Performance</a>
+      <a href="#endpoints">Endpoints</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#final" class="btn btn-primary btn-sm">Get your API key</a>
+  </div>
+</nav>
+
+<!-- 1 · HERO -->
+<section id="hero" class="dots-dark">
+  <div class="wrap">
+    <h1 class="hero serif">Real-time search API<br>for AI agents</h1>
+    <p class="lead on-dark" style="margin-top:22px">
+      Fresh, ranked, model-ready results from the live web. Text, images, and video on one key.
+    </p>
+    <div class="cta-row">
+      <a href="#final" class="btn btn-primary">Get your API key</a>
+      <a href="#" class="btn btn-ghost">Read the docs</a>
+      <span class="credit">$5 in free credit on signup.</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="v">62<span class="u">ms P50</span></div><div class="k">Web Search latency</div></div>
+      <div class="stat"><div class="v">95.2<span class="u">%</span></div><div class="k">SimpleQA</div></div>
+      <div class="stat"><div class="v">$1<span class="u">/ 1k calls</span></div><div class="k">Pay as you go</div></div>
+      <div class="stat"><div class="v">4</div><div class="k">Endpoints, one key</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · PERFORMANCE -->
+<section id="perf" style="background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center;padding:72px 0">
+  <div class="wrap">
+    <span class="eyebrow">Performance</span>
+    <h2 class="big serif">Highest accuracy at the lowest latency</h2>
+    <p class="lead" style="margin-top:18px;margin-left:auto;margin-right:auto">
+      Measured on public benchmarks against every fast-tier search API.
+    </p>
+
+
+    </div>
+
+    <div class="panel" style="margin-top:32px;background:var(--paper)">
+      <svg viewBox="0 0 820 336" style="width:100%;height:auto" role="img" aria-label="Latency against SimpleQA accuracy on the fast tier. Each bar runs from the provider's P50 to its P90. Octen 62 to 68 milliseconds at 95.2 percent; Tavily Ultra-Fast 244 to 351 at 69.9 percent; Parallel Turbo 332 to 420 at 88.6 percent; Exa Instant 372 to 507 at 89.2 percent.">
+        <g stroke="#E2E5E0" stroke-width="1">
+          <line x1="66" y1="262" x2="800" y2="262"/><line x1="66" y1="26" x2="66" y2="262"/>
+          <line x1="66" y1="204" x2="800" y2="204" stroke-dasharray="3 5"/>
+          <line x1="66" y1="146" x2="800" y2="146" stroke-dasharray="3 5"/>
+          <line x1="66" y1="88" x2="800" y2="88" stroke-dasharray="3 5"/>
+        </g>
+        <g font-family="JetBrains Mono, monospace" font-size="11" fill="#6B7570">
+          <text x="66" y="282">0</text><text x="190.0" y="282">100ms</text><text x="314.0" y="282">200ms</text><text x="438.0" y="282">300ms</text><text x="562.0" y="282">400ms</text><text x="686.0" y="282">500ms</text>
+          <text x="24" y="266">70%</text><text x="24" y="208">78%</text><text x="24" y="150">86%</text><text x="24" y="92">94%</text>
+        </g>
+        <g font-family="Inter, sans-serif" font-size="10.5" font-weight="600" fill="#6B7570" letter-spacing="1.1">
+          <text x="66" y="306">LATENCY · BAR RUNS P50 → P90</text><text x="16" y="16">SIMPLEQA</text>
+        </g>
+        <line x1="142.9" y1="79.3" x2="150.3" y2="79.3" stroke="#0E9F6E" stroke-width="2.5" opacity=".55"/>
+        <line x1="150.3" y1="74.8" x2="150.3" y2="83.8" stroke="#0E9F6E" stroke-width="2.5" opacity=".55"/>
+        <circle cx="142.9" cy="79.3" r="18" fill="#0E9F6E" opacity=".13"/>
+        <circle cx="142.9" cy="79.3" r="7.5" fill="#0E9F6E"/>
+        <text x="168.9" y="75.3" text-anchor="start" font-family="Playfair Display, Georgia, serif" font-size="19" font-weight="600" fill="#0E9F6E">Octen</text>
+        <text x="168.9" y="94.3" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="11.5" fill="#0E9F6E">62–68ms · 95.2%</text>
+        <line x1="368.6" y1="262.7" x2="501.2" y2="262.7" stroke="#E8543F" stroke-width="2" opacity=".4"/>
+        <line x1="501.2" y1="258.2" x2="501.2" y2="267.2" stroke="#E8543F" stroke-width="2" opacity=".4"/>
+        <circle cx="368.6" cy="262.7" r="6" fill="#E8543F"/>
+        <text x="342.6" y="236.7" text-anchor="start" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#0A100D">Tavily Ultra-Fast</text>
+        <text x="342.6" y="253.7" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B7570">244–351ms · 69.9%</text>
+        <line x1="477.7" y1="127.2" x2="586.8" y2="127.2" stroke="#E8543F" stroke-width="2" opacity=".4"/>
+        <line x1="586.8" y1="122.7" x2="586.8" y2="131.7" stroke="#E8543F" stroke-width="2" opacity=".4"/>
+        <circle cx="477.7" cy="127.2" r="6" fill="#E8543F"/>
+        <text x="433.7" y="161.2" text-anchor="start" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#0A100D">Parallel Turbo</text>
+        <text x="433.7" y="178.2" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B7570">332–420ms · 88.6%</text>
+        <line x1="527.3" y1="122.8" x2="694.7" y2="122.8" stroke="#E8543F" stroke-width="2" opacity=".4"/>
+        <line x1="694.7" y1="118.3" x2="694.7" y2="127.3" stroke="#E8543F" stroke-width="2" opacity=".4"/>
+        <circle cx="527.3" cy="122.8" r="6" fill="#E8543F"/>
+        <text x="471.29999999999995" y="92.8" text-anchor="start" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#0A100D">Exa Instant</text>
+        <text x="471.29999999999995" y="109.8" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B7570">372–507ms · 89.2%</text>
+      </svg>
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="mv">62<em>ms</em></div>
+        <div class="mk">P50 latency</div>
+        <div class="ms">68ms at P90</div>
+      </div>
+      <div class="metric">
+        <div class="mv">95.2<em>%</em></div>
+        <div class="mk">SimpleQA accuracy</div>
+        <div class="ms">55.8% on FreshQA Strict</div>
+      </div>
+      <div class="metric">
+        <div class="mv">Minutes</div>
+        <div class="mk">Index freshness</div>
+        <div class="ms">Markets, news, and sports</div>
+      </div>
+    </div>
+
+        <p class="note" style="margin-top:20px"><a href="#">Methodology →</a></p>
+  </div>
+</section>
+
+<!-- 4 · BROAD SEARCH -->
+<!-- 4 · ENDPOINTS -->
+<section id="endpoints" class="dots">
+  <div class="wrap">
+    <span class="eyebrow">Four APIs</span>
+    <h2 class="big serif">Search text, images, and video</h2>
+    <p class="lead" style="margin-top:20px">One key covers all four.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-p="p1">Web Search</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="p2">Broad Search</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="p3">Image Search<span class="ea">Early Access</span></button>
+      <button class="tab" role="tab" aria-selected="false" data-p="p4">Video Search<span class="ea">Early Access</span></button>
+    </div>
+    <p class="hint">Choose an option to see the request and response.</p>
+
+    <div class="pane on" id="p1">
+      <div class="pane-head">
+        <div>
+          <div class="pane-kind"><b>POST /search</b></div>
+          <h3>Web Search</h3>
+          <p>Ranked results from the live web, with the passage that answers the query.</p>
+          <div class="rowsel" data-target="p1box">
+          <button class="rsel on" data-s="s1a">
+            <span class="tag on">default</span>
+            <span class="rt">Highlights</span>
+            <span class="rd">Only the passages that answer the query, so whole pages never pad your context window.</span>
+          </button>
+          <button class="rsel" data-s="s1b">
+            
+            <span class="rt">Full page content</span>
+            <span class="rd">The complete text of each page, stripped of navigation and ads.</span>
+          </button>
+          <button class="rsel" data-s="s1c">
+            
+            <span class="rt">Page images</span>
+            <span class="rd">Cover and inline images from each result, each with a description.</span>
+          </button>
+          <button class="rsel" data-s="s1d">
+            
+            <span class="rt">Source filters</span>
+            <span class="rd">Results limited to the domains, language, or time window you choose.</span>
+          </button>
+          </div>
+          <p style="margin-top:16px"><a href="#" class="arrow">Docs →</a></p>
+        </div>
+        <div class="codepanel">
+          <div class="codehead">
+            <span class="cpath">POST /search</span>
+            <div class="ctoggle" data-box="p1box">
+              <button class="ctg on" data-mode="req">Request</button>
+              <button class="ctg" data-mode="res">Response</button>
+            </div>
+            <button class="ccopy" data-box="p1box">Copy</button>
+            <a class="cplat" href="#" title="Open in API Platform">Platform ↗</a>
+          </div>
+          <div class="snipbox" id="p1box">
+<pre class="snip-c on" id="s1a">curl -X POST https://api.octen.ai/search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"query"</span>: <span class="k-str">"2026 Champions League final"</span>,
+    <span class="k-key">"count"</span>: <span class="k-num">5</span>
+  }'</pre>
+<pre class="snip-c" id="s1b">curl -X POST https://api.octen.ai/search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"query"</span>: <span class="k-str">"standing desk ergonomics"</span>,
+    <span class="k-key">"full_content"</span>: { <span class="k-key">"enable"</span>: true, <span class="k-key">"max_tokens"</span>: <span class="k-num">4000</span> }
+  }'</pre>
+<pre class="snip-c" id="s1c">curl -X POST https://api.octen.ai/search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"query"</span>: <span class="k-str">"northern lights tonight"</span>,
+    <span class="k-key">"topic"</span>: <span class="k-str">"news"</span>,
+    <span class="k-key">"include_images"</span>: true
+  }'</pre>
+<pre class="snip-c" id="s1d">curl -X POST https://api.octen.ai/search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"query"</span>: <span class="k-str">"central bank rate decision"</span>,
+    <span class="k-key">"include_domains"</span>: [<span class="k-str">"reuters.com"</span>, <span class="k-str">"bloomberg.com"</span>],
+    <span class="k-key">"language"</span>: [<span class="k-str">"en"</span>],
+    <span class="k-key">"time_range"</span>: <span class="k-str">"week"</span>
+  }'</pre>
+<pre class="snip-r" id="p1res">{
+  <span class="k-key">"code"</span>: <span class="k-num">0</span>, <span class="k-key">"msg"</span>: <span class="k-str">"success"</span>,
+  <span class="k-key">"request_id"</span>: <span class="k-str">"req_abc123def456"</span>,
+  <span class="k-key">"data"</span>: { <span class="k-key">"results"</span>: [{
+    <span class="k-key">"title"</span>: <span class="k-str">"Champions League final 2026 — result"</span>,
+    <span class="k-key">"url"</span>: <span class="k-str">"https://www.uefa.com/uefachampionsleague/..."</span>,
+    <span class="k-key">"highlight"</span>: <span class="k-str">"... won 2–1 after extra time, sealing a"</span>
+                 <span class="k-str">"record-extending title ..."</span>,
+    <span class="k-key">"authors"</span>: <span class="k-str">"UEFA"</span>,
+    <span class="k-key">"time_published"</span>: <span class="k-str">"2026-05-30T21:48:00Z"</span>,
+    <span class="k-key">"time_last_crawled"</span>: <span class="k-str">"2026-05-30T22:03:11Z"</span>
+  }] },
+  <span class="k-key">"meta"</span>: { <span class="k-key">"usage"</span>: { <span class="k-key">"num_search_queries"</span>: <span class="k-num">1</span> },
+           <span class="k-key">"latency"</span>: <span class="k-num">64</span> }
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pane" id="p2">
+      <div class="pane-head">
+        <div>
+          <div class="pane-kind"><b>POST /broad-search</b></div>
+          <h3>Broad Search</h3>
+          <p>Splits one question into sub-queries, searches them at once, and groups what comes back.</p>
+          <div class="rowsel" data-target="p2box">
+          <button class="rsel on" data-s="s2a">
+            <span class="tag on">default</span>
+            <span class="rt">Grouped results</span>
+            <span class="rd">Results returned under the sub-query that found them.</span>
+          </button>
+          <button class="rsel" data-s="s2b">
+            
+            <span class="rt">Shared filters</span>
+            <span class="rd">One set of parameters applied to every sub-query at once.</span>
+          </button>
+          <button class="rsel" data-s="s2c">
+            
+            <span class="rt">Full content</span>
+            <span class="rd">Cleaned page text for the results of every sub-query.</span>
+          </button>
+          </div>
+          <p style="margin-top:16px"><a href="#" class="arrow">Docs →</a></p>
+        </div>
+        <div class="codepanel">
+          <div class="codehead">
+            <span class="cpath">POST /broad-search</span>
+            <div class="ctoggle" data-box="p2box">
+              <button class="ctg on" data-mode="req">Request</button>
+              <button class="ctg" data-mode="res">Response</button>
+            </div>
+            <button class="ccopy" data-box="p2box">Copy</button>
+            <a class="cplat" href="#" title="Open in API Platform">Platform ↗</a>
+          </div>
+          <div class="snipbox" id="p2box">
+<pre class="snip-c on" id="s2a">curl -X POST https://api.octen.ai/broad-search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"query"</span>: <span class="k-str">"state of solid-state battery technology"</span>,
+    <span class="k-key">"max_queries"</span>: <span class="k-num">12</span>
+  }'</pre>
+<pre class="snip-c" id="s2b">curl -X POST https://api.octen.ai/broad-search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"query"</span>: <span class="k-str">"central bank decisions globally"</span>,
+    <span class="k-key">"max_queries"</span>: <span class="k-num">8</span>,
+    <span class="k-key">"search_options"</span>: {
+      <span class="k-key">"topic"</span>: <span class="k-str">"news"</span>,
+      <span class="k-key">"time_range"</span>: <span class="k-str">"week"</span>
+    }
+  }'</pre>
+<pre class="snip-c" id="s2c">curl -X POST https://api.octen.ai/broad-search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"query"</span>: <span class="k-str">"compare cloud GPU pricing"</span>,
+    <span class="k-key">"max_queries"</span>: <span class="k-num">8</span>,
+    <span class="k-key">"search_options"</span>: {
+      <span class="k-key">"full_content"</span>: { <span class="k-key">"enable"</span>: true }
+    }
+  }'</pre>
+<pre class="snip-r" id="p2res">{
+  <span class="k-key">"data"</span>: {
+    <span class="k-key">"queries"</span>: [<span class="k-str">"solid-state battery pilot lines 2026"</span>,
+                <span class="k-str">"sulfide vs oxide electrolyte progress"</span>, ...],
+    <span class="k-key">"search_results"</span>: [{
+      <span class="k-key">"query"</span>: <span class="k-str">"solid-state battery pilot lines 2026"</span>,
+      <span class="k-key">"results"</span>: [{ <span class="k-key">"title"</span>: <span class="k-str">"..."</span>, <span class="k-key">"url"</span>: <span class="k-str">"..."</span>,
+                    <span class="k-key">"highlight"</span>: <span class="k-str">"..."</span> }],
+      <span class="k-key">"latency"</span>: <span class="k-num">69</span>
+    }, ...]
+  },
+  <span class="k-key">"meta"</span>: { <span class="k-key">"usage"</span>: { <span class="k-key">"num_search_queries"</span>: <span class="k-num">12</span> } }
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pane" id="p3">
+      <div class="pane-head">
+        <div>
+          <div class="pane-kind"><b>POST /image-search</b> · Early Access</div>
+          <h3>Image Search</h3>
+          <p>Images from the open web, by text query or by reference image.</p>
+          <div class="rowsel" data-target="p3box">
+          <button class="rsel on" data-s="s3a">
+            <span class="tag on">default</span>
+            <span class="rt">Text query</span>
+            <span class="rd">Images from across the web, each with its source page and a description.</span>
+          </button>
+          <button class="rsel" data-s="s3b">
+            
+            <span class="rt">Reference image</span>
+            <span class="rd">Start from an image and get visually similar ones back.</span>
+          </button>
+          <button class="rsel" data-s="s3c">
+            
+            <span class="rt">Design mode</span>
+            <span class="rd">A style summary and a reusable HTML snippet for each result.</span>
+          </button>
+          <button class="rsel" data-s="s3d">
+            
+            <span class="rt">Source filters</span>
+            <span class="rd">Images limited to the domains you choose.</span>
+          </button>
+          </div>
+          <p style="margin-top:16px"><a href="#" class="arrow">Request access →</a></p>
+        </div>
+        <div class="codepanel">
+          <div class="codehead">
+            <span class="cpath">POST /image-search</span>
+            <div class="ctoggle" data-box="p3box">
+              <button class="ctg on" data-mode="req">Request</button>
+              <button class="ctg" data-mode="res">Response</button>
+            </div>
+            <button class="ccopy" data-box="p3box">Copy</button>
+            <a class="cplat" href="#" title="Open in API Platform">Platform ↗</a>
+          </div>
+          <div class="snipbox" id="p3box">
+<pre class="snip-c on" id="s3a">curl -X POST https://api.octen.ai/image-search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"inputs"</span>: [{ <span class="k-key">"type"</span>: <span class="k-str">"text"</span>, <span class="k-key">"data"</span>: <span class="k-str">"red sports car"</span> }],
+    <span class="k-key">"count"</span>: <span class="k-num">5</span>
+  }'</pre>
+<pre class="snip-c" id="s3b">curl -X POST https://api.octen.ai/image-search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"inputs"</span>: [{ <span class="k-key">"type"</span>: <span class="k-str">"image"</span>,
+                 <span class="k-key">"url"</span>: <span class="k-str">"https://example.com/reference.jpg"</span> }]
+  }'</pre>
+<pre class="snip-c" id="s3c">curl -X POST https://api.octen.ai/image-search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"inputs"</span>: [{ <span class="k-key">"type"</span>: <span class="k-str">"text"</span>,
+                 <span class="k-key">"data"</span>: <span class="k-str">"pricing table, dark theme, SaaS"</span> }],
+    <span class="k-key">"topic"</span>: <span class="k-str">"design"</span>,
+    <span class="k-key">"html_snippet"</span>: { <span class="k-key">"enable"</span>: true }
+  }'</pre>
+<pre class="snip-c" id="s3d">curl -X POST https://api.octen.ai/image-search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"inputs"</span>: [{ <span class="k-key">"type"</span>: <span class="k-str">"text"</span>, <span class="k-key">"data"</span>: <span class="k-str">"Mars rover photos"</span> }],
+    <span class="k-key">"include_domains"</span>: [<span class="k-str">"nasa.gov"</span>]
+  }'</pre>
+<pre class="snip-r" id="p3res">{
+  <span class="k-key">"request_id"</span>: <span class="k-str">"req_9d1c4f7a2e6b0853"</span>,
+  <span class="k-key">"data"</span>: { <span class="k-key">"results"</span>: [{
+    <span class="k-key">"title"</span>: <span class="k-str">"Red sports car on coastal road"</span>,
+    <span class="k-key">"url"</span>: <span class="k-str">"https://images.example.com/red-coupe.jpg"</span>,
+    <span class="k-key">"source_page"</span>: <span class="k-str">"https://example.com/photos/red-coupe"</span>,
+    <span class="k-key">"description"</span>: <span class="k-str">"A red sports car photographed in profile"</span>
+                   <span class="k-str">"against a coastal backdrop."</span>,
+    <span class="k-key">"width"</span>: <span class="k-num">1920</span>, <span class="k-key">"height"</span>: <span class="k-num">1280</span>,
+    <span class="k-key">"thumbnail"</span>: <span class="k-str">"https://images.example.com/red-coupe.jpg?w=200"</span>
+  }] },
+  <span class="k-key">"meta"</span>: { <span class="k-key">"latency"</span>: <span class="k-num">642</span> }
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pane" id="p4">
+      <div class="pane-head">
+        <div>
+          <div class="pane-kind"><b>POST /video-search</b> · Early Access</div>
+          <h3>Video Search</h3>
+          <p>Videos from the open web, with the metadata to preview or embed them.</p>
+          <div class="rowsel" data-target="p4box">
+          <button class="rsel on" data-s="s4a">
+            <span class="tag on">default</span>
+            <span class="rt">Text query</span>
+            <span class="rd">Videos with source page, cover image, duration, and publish time.</span>
+          </button>
+          <button class="rsel" data-s="s4b">
+            
+            <span class="rt">Recent only</span>
+            <span class="rd">Videos limited to the publish window you choose.</span>
+          </button>
+          </div>
+          <p style="margin-top:16px"><a href="#" class="arrow">Request access →</a></p>
+        </div>
+        <div class="codepanel">
+          <div class="codehead">
+            <span class="cpath">POST /video-search</span>
+            <div class="ctoggle" data-box="p4box">
+              <button class="ctg on" data-mode="req">Request</button>
+              <button class="ctg" data-mode="res">Response</button>
+            </div>
+            <button class="ccopy" data-box="p4box">Copy</button>
+            <a class="cplat" href="#" title="Open in API Platform">Platform ↗</a>
+          </div>
+          <div class="snipbox" id="p4box">
+<pre class="snip-c on" id="s4a">curl -X POST https://api.octen.ai/video-search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"inputs"</span>: [{ <span class="k-key">"type"</span>: <span class="k-str">"text"</span>,
+                 <span class="k-key">"data"</span>: <span class="k-str">"how to tie a bowline knot"</span> }],
+    <span class="k-key">"count"</span>: <span class="k-num">3</span>
+  }'</pre>
+<pre class="snip-c" id="s4b">curl -X POST https://api.octen.ai/video-search \
+  -H <span class="k-str">"Content-Type: application/json"</span> \
+  -H <span class="k-str">"x-api-key: YOUR_API_KEY"</span> \
+  -d '{
+    <span class="k-key">"inputs"</span>: [{ <span class="k-key">"type"</span>: <span class="k-str">"text"</span>, <span class="k-key">"data"</span>: <span class="k-str">"keynote highlights"</span> }],
+    <span class="k-key">"time_range"</span>: <span class="k-str">"week"</span>
+  }'</pre>
+<pre class="snip-r" id="p4res">{
+  <span class="k-key">"request_id"</span>: <span class="k-str">"20260627120000001ABCDE12345"</span>,
+  <span class="k-key">"data"</span>: { <span class="k-key">"results"</span>: [{
+    <span class="k-key">"title"</span>: <span class="k-str">"How to Tie a Bowline Knot"</span>,
+    <span class="k-key">"url"</span>: <span class="k-str">"https://videos.example.com/watch/bowline.mp4"</span>,
+    <span class="k-key">"source_page"</span>: <span class="k-str">"https://example.com/knots/bowline"</span>,
+    <span class="k-key">"description"</span>: <span class="k-str">"A step-by-step demonstration of the bowline,"</span>
+                   <span class="k-str">"tied slowly then at speed."</span>,
+    <span class="k-key">"cover_url"</span>: <span class="k-str">"https://cdn.example.com/thumbs/bowline.jpg"</span>,
+    <span class="k-key">"duration_seconds"</span>: <span class="k-num">184</span>,
+    <span class="k-key">"time_published"</span>: <span class="k-str">"2026-02-14T09:30:00Z"</span>
+  }] },
+  <span class="k-key">"meta"</span>: { <span class="k-key">"latency"</span>: <span class="k-num">482</span> }
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · PRICING -->
+<section id="pricing" style="background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <span class="eyebrow">Pricing</span>
+    <h2 class="big serif">Full content included</h2>
+    <p class="lead" style="margin-top:20px">
+      Pay as you go. The first 10 full-content results of every call are part of the price.
+    </p>
+
+    <div class="prices">
+      <div class="pr"><span class="pn">Web Search</span><span class="pv">$1<em>/ 1k calls</em></span></div>
+      <div class="pr"><span class="pn">Broad Search</span><span class="pv">$1<em>/ 1k sub-queries</em></span></div>
+      <div class="pr"><span class="pn">Image Search</span><span class="pv">$5<em>/ 1k calls</em></span></div>
+      <div class="pr"><span class="pn">Video Search</span><span class="pv">$5<em>/ 1k calls</em></span></div>
+    </div>
+
+    <p class="note" style="font-size:13.5px">
+      Beyond the included 10, full content is $0.50 per 1,000 results. New accounts start with $5 in free credit. <a href="#">Full pricing →</a>
+    </p>
+
+    <div class="cta-row" style="margin-top:34px">
+      <a href="#" class="btn btn-dark">Get your API key</a>
+      <a href="#" class="btn btn-outline">Talk to sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · STACK + FAQ -->
+<section id="final">
+  <div class="wrap">
+    <span class="eyebrow on-dark" style="color:var(--green-bright)">Part of the retrieval layer</span>
+    <h2 class="big serif">Search is where you start</h2>
+    <p class="lead on-dark" style="margin-top:18px">
+      The same key extracts pages, embeds them, and reasons over them.
+    </p>
+
+    <div class="stackgrid">
+      <a class="scard" href="#">
+        <span class="si"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2.5h8l4 4v9H3z"/><path d="M10.5 2.5V6h4M6 9.5h6M6 12h4"/></svg></span>
+        <span class="st">Extract <span class="sa">→</span></span>
+        <span class="sd">Turn any URL into clean markdown.</span>
+      </a>
+      <a class="scard" href="#">
+        <span class="si"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4.5" cy="5" r="2"/><circle cx="13.5" cy="5" r="2"/><circle cx="9" cy="13" r="2"/><path d="M6.3 6.2 7.9 11M11.7 6.2 10.1 11M6.5 5h5"/></svg></span>
+        <span class="st">Embeddings <span class="sa">→</span></span>
+        <span class="sd">Index your content with top-ranked embeddings.</span>
+      </a>
+      <a class="scard" href="#">
+        <span class="si"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="4" width="13" height="10" rx="2"/><path d="M6 8h6M6 10.5h3.5"/></svg></span>
+        <span class="st">Model Gateway <span class="sa">→</span></span>
+        <span class="sd">Frontier models on the same key, search built in.</span>
+      </a>
+      <a class="scard" href="#">
+        <span class="si"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7.5" cy="7.5" r="4.5"/><path d="M11 11l4 4M5.5 7.5h4"/></svg></span>
+        <span class="st">Deep Research <span class="sa">→</span></span>
+        <span class="sd">Multi-step research with cited reports.</span>
+      </a>
+    </div>
+
+    <h3 class="serif" style="font-size:23px;margin:64px 0 4px;color:#fff" id="faq">Common questions</h3>
+    <details>
+      <summary>What is a web search API?<span class="ico"></span></summary>
+      <div class="ans">It lets software query the live web and get structured results back, with no
+      browser or scraping. Octen is built for LLMs and agents: results arrive as ranked highlights
+      with timestamps and source URLs, ready to drop into a model's context.</div>
+    </details>
+    <details>
+      <summary>How is it different from a SERP API?<span class="ico"></span></summary>
+      <div class="ans">A SERP API scrapes a search engine and returns links and snippets — you still
+      fetch and clean each page. Octen queries its own live index and returns the content itself:
+      ranked, extracted, model-ready. One call replaces search plus crawl.</div>
+    </details>
+    <details>
+      <summary>Which web search API gives the best results?<span class="ico"></span></summary>
+      <div class="ans">Compare on public benchmarks within the same latency class. Among fast-tier
+      search APIs, Octen leads on SimpleQA at 95.2% and FreshQA Strict at 55.8%, ahead of Exa,
+      Parallel, and Tavily, at 62ms P50.</div>
+    </details>
+    <details>
+      <summary>When should I use Broad Search instead of Web Search?<span class="ico"></span></summary>
+      <div class="ans">Web Search for a single lookup: a fact, a price, a page. Broad Search when one
+      question has several angles, like comparisons or research. Same parameters, same result
+      fields — returned grouped by sub-query.</div>
+    </details>
+    <details>
+      <summary>How do I get Image Search and Video Search?<span class="ico"></span></summary>
+      <div class="ans">Both are in Early Access. Write to support@octen.ai and an existing key covers
+      them once enabled.</div>
+    </details>
+
+    <div class="trust">
+      <span>SOC 2 Type 2</span><span>·</span>
+      <span>1M+ QPS per account</span><span>·</span>
+      <span>99.9% uptime SLA</span><span>·</span>
+      <a href="#">status.octen.ai</a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">© 2026 APITECH AI PTE. LTD. — prototype. Amber fields need real figures before launch.</div></footer>
+
+<script>
+(function(){
+  // tabs
+  const tabs=[...document.querySelectorAll('.tab')];
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===t));
+    document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id===t.dataset.p));
+  }));
+
+  // request / response toggle
+  document.querySelectorAll('.ctoggle').forEach(tg=>{
+    const box=document.getElementById(tg.dataset.box);
+    const btns=[...tg.querySelectorAll('.ctg')];
+    btns.forEach(b=>b.addEventListener('click',()=>{
+      btns.forEach(x=>x.classList.toggle('on',x===b));
+      const res=b.dataset.mode==='res';
+      box.querySelector('.snip-r').classList.toggle('on',res);
+      box.querySelectorAll('.snip-c').forEach(c=>c.style.display = res ? 'none' : '');
+    }));
+  });
+
+  // copy whatever is currently visible
+  document.querySelectorAll('.ccopy').forEach(btn=>{
+    btn.addEventListener('click',async()=>{
+      const box=document.getElementById(btn.dataset.box);
+      const shown=[...box.querySelectorAll('pre')].find(el=>el.offsetParent!==null);
+      if(!shown) return;
+      try{ await navigator.clipboard.writeText(shown.innerText); }
+      catch(e){
+        const r=document.createRange(); r.selectNodeContents(shown);
+        const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      }
+      btn.textContent='Copied'; btn.classList.add('done');
+      setTimeout(()=>{btn.textContent='Copy'; btn.classList.remove('done');},1600);
+    });
+  });
+
+  // each capability row selects the request shown beside it
+  document.querySelectorAll('.rowsel').forEach(group=>{
+    const box=document.getElementById(group.dataset.target);
+    const rows=[...group.querySelectorAll('.rsel')];
+    rows.forEach(r=>r.addEventListener('click',()=>{
+      rows.forEach(x=>x.classList.toggle('on',x===r));
+      box.querySelectorAll('.snip-c').forEach(s=>{
+        s.classList.toggle('on',s.id===r.dataset.s);
+        s.style.display='';
+      });
+      box.querySelector('.snip-r').classList.remove('on');
+      const tg=box.parentElement.querySelector('.ctoggle');
+      [...tg.querySelectorAll('.ctg')].forEach(b=>b.classList.toggle('on',b.dataset.mode==='req'));
+    }));
+  });
+
+})();
+</script>
+</body>
+</html>
