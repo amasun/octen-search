@@ -889,9 +889,13 @@
       2. **Deep Research**：深蓝粒子数据矩阵背景 + 纯白高精度矢量 Microscope 显微镜图标 + 纯白单行标题。
       3. **Multimodal Chat**：暗绿矩阵字符流背景 + 纯白高精度矢量 Chat 气泡多模态图标 + 纯白单行标题 + 右上角悬浮 `Early Access` 毛玻璃徽章。
       4. **Grounded Generation**：深邃墨绿绽放花瓣背景 + 纯白高精度矢量 Magic Wand 魔法棒图标 + 纯白单行标题 + 右上角悬浮 `Early Access` 毛玻璃徽章。
-  - **矢量图标与高清背景资产落地**：
+  - **矢量图标与 Figma 原素材高清背景落地**：
     - 直接从 Figma 原型提取 4 个精准的矢量 SVG 图标嵌入卡片中。
-    - 生成并保存 4 张 4K 级别电影质感暗色背景纹理至 [`images/app-answer.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-answer.jpg)、[`images/app-deep-research.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-deep-research.jpg)、[`images/app-multimodal-chat.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-multimodal-chat.jpg)、[`images/app-grounded-generation.jpg`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-grounded-generation.jpg)。
+    - 通过 Figma Dev Mode 本地服务直连下载 Figma 文件内部原始未压缩材质资产（完全保持原作者设计的原汁原味），彻底取代 AI 替代图：
+      - [`images/app-answer.png`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-answer.png)：原版绿色数据涡流隧道材质
+      - [`images/app-deep-research.png`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-deep-research.png)：原版蓝黑色代码矩阵人形流材质
+      - [`images/app-multimodal-chat.png`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-multimodal-chat.png)：原版暗绿终端字符流材质
+      - [`images/app-grounded-generation.png`](file:///x:/XCoding/Octen/08-search%20subpage/images/app-grounded-generation.png)：原版白绿花瓣融入 ASCII 代码材质
   - **高级交互体验**：
     - 悬浮时卡片背景以柔和贝塞尔曲线微缩放（`scale(1.06)`），图标产生微妙向上浮动（`-2px`）。
     - `Early Access` 徽章默认常显（`opacity: 1, visibility: visible`，对齐 Figma 原型），在卡片 Hover 时伴随边框微提亮（`#70FE7E`）与光晕交互。

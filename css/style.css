@@ -2681,25 +2681,25 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.9;
+  opacity: 0.65;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
 
 .nav-dropdown-app-item:hover .nav-app-bg {
   transform: scale(1.06);
-  opacity: 1;
+  opacity: 0.85;
 }
 
 .nav-app-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.35) 100%);
   pointer-events: none;
   transition: background 0.3s ease;
 }
 
 .nav-dropdown-app-item:hover .nav-app-overlay {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.45) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
 }
 
 .nav-app-center-content {
