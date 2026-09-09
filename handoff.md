@@ -1068,6 +1068,26 @@
     - 首项保持 `.endpoints-api-step:first-child { height: 480px; min-height: 480px; margin-top: 0; }`，确保首个步骤初始状态与右侧卡片维持精确水平居中对齐；末项配置 `min-height: 560px; padding-bottom: 280px;`；
     - 移动端 `@media (max-width: 1024px)` 相应配置 `.endpoints-api-step + .endpoints-api-step { margin-top: 24px; }`，保证紧凑与美观。
 
+### (105) 修复顶部导航 Products 下拉菜单边界过大问题 (Navbar Dropdown Sizing & Boundary Refinement)
+- **需求**：修复navbar 弹出menu的边界，目前过大了。
+- **落实方案**：
+  - 在 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中对 `.nav-dropdown-card.nav-dropdown-split` 及其子组件进行全维度紧凑瘦身：
+    - **外层容器收束**：宽度由原先过于庞大的 `841px` 收敛至 **`640px`**（内边距由 `20px` 紧凑至 `16px`，间距由 `20px` 调整为 `16px`，并配置 `max-width: calc(100vw - 32px);` 防止任何屏幕宽度下的溢出）；
+    - **左侧 API 列表**：宽度由 `307px` 收敛至 `244px`，菜单项内边距调整为 `8px 10px`，图标规范为 `20px`，标题与说明字号优化为 `14px / 12px`；
+    - **右侧 Application 网格**：宽度由 `474px` 收敛至 `348px`，2×2 应用卡片尺寸由 `210px × 145px` 精致缩减为 `160px × 108px`（圆角 `10px`，中心图标与文案比例同步收束为 `28px` / `14px`，Badge 标签高度微调为 `20px`，字号 `10px`）；
+    - **整体高度收缩**：面板总高度由原先的 `372px` 缩减至约 `278px`，整体呈现出高度克制、精密平衡的顶级 SaaS 导航质感。
+
+### (106) Performance 性能区域指标数字支持循环滚动动效 (Recurring Number Roll on Viewport Enter)
+- **需求**：让performance区域的数字每次从下方移入显示区，都会出现数字滚动效果。
+- **落实方案**：
+  - **初值与目标值语义绑定**：
+    - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中为 4 个指标的 `<number-flow>` 分别配置 `data-perf-start="[0|90.0]"`、`data-perf-target="[62|95.2|99.9|1]"`，并将初始 `value` 属性重置为起始值（0 / 0 / 90.0 / 0），确保滚动前数字在起点待命。
+  - **循环视口监听与滚动重放**：
+    - 在 [`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js) 中重构了第 7 节交互逻辑，彻底移除了原先一次性触发的 `observer.disconnect()`；
+    - 当元素移出视口（`!entry.isIntersecting`）时，自动触发 `resetToStart()`，以 `nf.animated = false` 瞬间且静默地将数字归位至起始值；
+    - 当用户每次向下滚动并将 `.metrics-overview-unified` 移入显示区（`entry.isIntersecting === true`）时，自动以波浪式优雅交错延迟（80ms, 130ms, 180ms, 230ms）启动 `nf.animated = true; nf.value = targetNum;`；
+    - 无论是多次向下滚动浏览、还是向上回滚后再次滑入，每次都能流畅重现数字物理滚动跳动效果。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)

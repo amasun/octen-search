@@ -220,36 +220,68 @@ document.addEventListener("DOMContentLoaded", () => {
     heroPrimaryBtn.addEventListener("mouseleave", () => heroCreditNote.classList.remove("is-highlighted"));
   }
 
-  // 7. Production-grade Performance Metrics (No Parallax)
-  const performanceSection = document.getElementById("performance");
+  // 7. Production-grade Performance Metrics (Recurring Rolling Animation on Viewport Enter)
   const metricsUnified = document.querySelector(".metrics-overview-unified");
+  if (metricsUnified) {
+    const numberFlows = metricsUnified.querySelectorAll("number-flow[data-perf-target]");
 
-  if (performanceSection && metricsUnified) {
-    const triggerNumbers = () => {
-      const numberFlows = metricsUnified.querySelectorAll("number-flow[data-target-value]");
-      numberFlows.forEach(nf => {
-        const targetVal = nf.getAttribute("data-target-value");
+    let hasPlayed = false;
+
+    const playRollingAnimation = () => {
+      numberFlows.forEach((nf, idx) => {
+        const targetVal = nf.getAttribute("data-perf-target");
+        const startVal = nf.getAttribute("data-perf-start");
         if (targetVal !== null) {
-          const num = parseFloat(targetVal);
-          if (!isNaN(num)) {
-            nf.value = num;
+          const targetNum = parseFloat(targetVal);
+          const startNum = startVal !== null ? parseFloat(startVal) : 0;
+          if (!isNaN(targetNum)) {
+            // First snap silently to start value to ensure complete roll
+            nf.animated = false;
+            nf.value = !isNaN(startNum) ? startNum : 0;
+
+            // Trigger rolling animation with a smooth stagger
+            setTimeout(() => {
+              nf.animated = true;
+              nf.value = targetNum;
+            }, 80 + idx * 50);
           }
         }
       });
+      hasPlayed = true;
+    };
+
+    const resetToStart = () => {
+      if (!hasPlayed) return;
+      numberFlows.forEach(nf => {
+        const startVal = nf.getAttribute("data-perf-start");
+        if (startVal !== null) {
+          const startNum = parseFloat(startVal);
+          if (!isNaN(startNum)) {
+            nf.animated = false;
+            nf.value = startNum;
+          }
+        }
+      });
+      hasPlayed = false;
     };
 
     if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver((entries) => {
+      const metricsObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            triggerNumbers();
-            observer.disconnect();
+            playRollingAnimation();
+          } else {
+            resetToStart();
           }
         });
-      }, { threshold: 0.15 });
-      observer.observe(performanceSection);
+      }, {
+        threshold: 0.15,
+        rootMargin: "0px 0px -40px 0px"
+      });
+
+      metricsObserver.observe(metricsUnified);
     } else {
-      triggerNumbers();
+      playRollingAnimation();
     }
   }
 
