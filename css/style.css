@@ -1154,28 +1154,14 @@
   padding-top: 80px;
 }
 
-/* Sticky Search API Section Head: stays pinned during scrollytelling */
+/* Search API Section Head: Clean document-flow presentation, zero overlap with content area */
 #endpoints .section-head {
-  position: sticky;
-  top: 68px;
-  z-index: 25;
-  background: #FFFFFF;
-  padding: 24px 0 20px;
-  margin: 0 auto 56px;
+  position: relative;
+  background: transparent;
+  padding: 0 0 20px;
+  margin: 0 auto 48px;
   width: 100%;
   text-align: center;
-}
-
-/* Subtle feathered gradient extending downward from sticky title */
-#endpoints .section-head::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  height: 28px;
-  background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
-  pointer-events: none;
 }
 
 .endpoints-scrolly-grid {
@@ -1193,45 +1179,35 @@
   position: relative;
 }
 
-/* Sticky top fade-out gradient mask specifically for left text column */
-.scrolly-fade-mask-top {
-  position: sticky;
-  top: 188px;
-  height: 140px;
-  margin-top: -140px;
-  background: linear-gradient(to bottom, #FFFFFF 20%, rgba(255, 255, 255, 0.85) 60%, rgba(255, 255, 255, 0) 100%);
-  pointer-events: none;
-  z-index: 18;
-}
-
 .endpoints-api-step {
-  min-height: 640px;
+  min-height: 560px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 48px 0;
+  padding: 40px 0;
   cursor: pointer;
 }
 
-/* Slightly increase spacing between consecutive text groups */
+/* Spacing between consecutive text groups */
 .endpoints-api-step + .endpoints-api-step {
-  margin-top: 64px;
+  margin-top: 48px;
 }
 
 /* First Step (Web Search): exact horizontal alignment with top of right card */
 .endpoints-api-step:first-of-type,
 .endpoints-api-step[data-api-index="0"] {
   height: auto;
-  min-height: 520px;
+  min-height: 480px;
   justify-content: flex-start;
   padding: 0;
   margin-top: 0;
 }
 
+/* Last Step (Video Search): comfortable breathing room without pushing ceiling */
 .endpoints-api-step:last-of-type,
 .endpoints-api-step:last-child {
-  min-height: 560px;
-  padding-bottom: 280px;
+  min-height: 480px;
+  padding-bottom: 120px;
 }
 
 .api-step-inner {
@@ -1245,13 +1221,6 @@
 
 .endpoints-api-step:not(.is-active):hover .api-step-inner {
   opacity: 0.55;
-}
-
-/* Smooth fade-out and slight upward drift when a step is scrolled past */
-.endpoints-api-step.is-passed .api-step-inner {
-  opacity: 0;
-  transform: translateY(-16px);
-  pointer-events: none;
 }
 
 
@@ -1413,7 +1382,7 @@
 
 .sticky-frame-wrapper {
   position: sticky;
-  top: max(216px, calc(50vh - 220px));
+  top: max(88px, calc(50vh - 240px));
   height: 480px;
   width: 100%;
   z-index: 10;

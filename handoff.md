@@ -1115,6 +1115,23 @@
   - **顶部平齐对齐**：将 `justify-content` 改为 `flex-start`，移除顶部 `padding: 0; margin-top: 0;`，并重置 `h3.api-step-title { margin: 0 0 12px 0; }` 去除默认外边距；
   - **对齐效果**：进入 Search API 大区时，左侧 Web Search 标题/图标的顶部边缘与右侧 480px 矩形卡片的顶边边框处于完全一致的水平基准线上（Y = 0）；随着用户向下滚动时，文字顺畅向上移出并自然滚动切换至下一项。
 
+### (110) Search API 标题与遮罩架构优化：消除与内容区重叠及右侧图形遮挡 (Search API Header & Mask Architecture Optimization)
+- **需求**：Search API 标题区域增加了遮罩，导致视差滚动最后一栏 video search和标题重叠时会出现遮罩和该区域的图形重叠，优化实现方式，保证标题不要和内容区重叠。
+- **问题根源定位**：
+  1. 此前为了实现“主标题吸顶不动”，为 `#endpoints .section-head` 设置了 `position: sticky; top: 68px; background: #FFFFFF;`，并生成了一个横跨整个容器宽度的全宽渐隐蒙版伪元素（`::after`，`left: 0; right: 0;`）；
+  2. 当页面滚动到第四栏 Video Search 乃至 Section 尾部时，整个滚动网格向上位移，导致右侧视差卡片被推入顶部区域，直接被 `section-head` 的全宽白色背景及蒙版切断遮挡；同时左侧最后一栏 Video Search 也与吸顶的标题发生严重的穿模重叠；
+  3. 事实证明：在垂直流滚动的页面中，如果一个主标题横跨全宽吸顶停留在视口内，其下方向上移动的内容必然会在视口顶部与标题及遮罩发生几何重叠。
+- **落实方案**：
+  - **恢复工业标准自然流标题**（[`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css)）：
+    - 将 `#endpoints .section-head` 还原为自然文档流 `position: relative; background: transparent;`，彻底移除全宽 `::after` 白色渐隐蒙版；
+    - 移除了 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中插入的 `<div class="scrolly-fade-mask-top">` 局部蒙版；
+    - **零重叠保证**：标题在 Section 开头以大气清晰的方式展示介绍，随着用户向下滚动视差区域，标题自然平滑移出视口，将 100% 的视口高度留给左侧 4 栏图文叙事与右侧卡片；标题与内容区永不重叠，右侧图形完全没有任何蒙版遮挡；
+  - **精简视差步骤高度与平滑过渡**：
+    - 首项 Web Search 维持 `min-height: 480px; justify-content: flex-start;` 与右侧卡片顶边绝对平齐；
+    - 末项 Video Search 设置为 `min-height: 480px; padding-bottom: 120px;`，在视口中拥有充裕居中展现空间且绝不会被顶穿；
+    - 移除了已滚动项强制 `opacity: 0` 的消失规则，恢复为高雅的未激活淡化（`opacity: 0.28`），激活项高亮（`opacity: 1`），全篇结构清晰连贯；
+    - 右侧卡片吸顶偏移量优化为 `top: max(88px, calc(50vh - 240px));`，在视口垂直居中，右侧视觉图形完全纯净无暇。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
@@ -1132,6 +1149,7 @@
 1. **等待用户提供右侧 4 个插槽的替换内容**：
    - 收到具体内容后，在 `index.html` 中的 `.sticky-graphic-slot[data-slot-index="0..3"]` 填入对应的真实视觉内容（例如 SVG 交互图、数据演示、代码预览等）。
 2. **其他用户待提出的页面优化需求**。
+
 
 
 
