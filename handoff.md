@@ -923,8 +923,8 @@
     - **Hero 主标题 (`.hero-title`)**：纯白 `#FFFFFF`，配合深邃微投影 `text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6)`。
     - **Hero 副标题 (`.hero-subtitle`)**：清晰副文字 `#FFFFFF / rgba(255, 255, 255, 0.85)`，强调高亮词汇（`.highlight-credit`）采用品牌荧光翠绿 `#70FE7E`（粗体 700）。
     - **赠金说明 (`.hero-credit-note`)**：中性浅白透灰 `rgba(255, 255, 255, 0.65)`，主按钮 Hover 时高亮提亮为 `#70FE7E`。
-    - **主 CTA 按钮 (`.btn-hero-primary`)**：反色为纯白胶囊按钮（`background: #FFFFFF; color: #100F09;`），箭头图标对应着色为 `#100F09`，并配有极微翡翠光晕投影 `box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 0 20px rgba(112, 254, 126, 0.12)`；Hover 时平滑变为 `#F0F2F0` 并微向上浮动。
-    - **次 CTA 按钮 (`.btn-hero-ghost`)**：反色为暗色毛玻璃幽灵按钮（`background: rgba(255, 255, 255, 0.08); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.24); backdrop-filter: blur(12px)`）。
+    - **主 CTA 按钮 (`.btn-hero-primary` / Get your API key)**：完全复刻 `05-pricing` 的 `Start Building` 按钮规范（`border: 1px solid #60FF70; color: #60FF70; background: transparent; border-radius: 10px; font-size: 16px;`），箭头着色为 `#60FF70`；Hover 时背景呈现 `rgba(96, 255, 112, 0.10)` 荧光微底并伴随 `0 0 20px rgba(96, 255, 112, 0.20)` 极光流体光晕，Active 点击产生 `scale(0.97)` 微按压动效。
+    - **次 CTA 按钮 (`.btn-hero-ghost` / View Docs)**：复刻 `05-pricing` 的透明幽灵边框按钮（`background: transparent; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.50); border-radius: 10px; font-size: 16px; backdrop-filter: blur(8px);`），Hover 产生柔和白光半透底色（`rgba(255, 255, 255, 0.10)`）。
   - **顶部导航栏智能双主题自适应联动 (Adaptive Dual-theme Navbar)**：
     - **置顶于 Hero 黑底区**（`window.scrollY <= 20`）：
       - 自动显示浅色版 Logo（`.nav-logo-dark` 白色 Octen 字样 + 荧光绿图形），隐藏深色 Logo。
