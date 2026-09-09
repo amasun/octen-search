@@ -981,6 +981,13 @@
     - 在 `@media (max-width: 1024px)` 移动端重置为 `height: auto; min-height: auto; padding: 28px 0;`，保证响应式布局健壮。
   - 在 [`js/main.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/main.js) 中将滚动感知视口锚点精准锁定为 `window.innerHeight * 0.5`（50vh），与右侧 `calc(50vh - 240px)` 的 Sticky 居中卡片 100% 同心同轴。
 
+### (96) Section 3 主标题更新为 Search API 并整合辅助文字
+- **需求**：One search engine for every modality 改为 Search API。辅助文字整合这两句：One search engine for every modality / Ranked passages, visual assets, and video timestamps on a single key.
+- **落实方案**：
+  - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中：
+    - 将 `#endpoints .section-title` 由 `One search engine for every modality` 更新为简洁有力的 **`Search API`**；
+    - 将辅助文本 `.section-desc` 整合为：`One search engine for every modality. Ranked passages, visual assets, and video timestamps on a single key.`，完整保留原有语意，段落排版兼顾信息密度与现代 SaaS 质感。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
