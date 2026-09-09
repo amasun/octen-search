@@ -998,6 +998,13 @@
     - 将 4 个步骤标题前面的 SVG（Web Search、Broad Search、Image Search、Video Search）宽高属性由 `24x24` 全量升级为 `36x36`；
     - 将原有绿色描边/填充色值（`stroke="#039855"` / `fill="#039855"`）统一替换为 `stroke="currentColor"` 与 `fill="currentColor"`，使图标呈现纯净深邃的墨黑色，与 32px 衬线标题在视觉重心和基线上达到黄金比例对齐。
 
+### (98) Search API 辅助文字精简为 One single key 开头的单句
+- **需求**：One search engine for every modality. Ranked passages, visual assets, and video timestamps on a single key. 简化为一句话，从one single key开头。
+- **落实方案**：
+  - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中，将 `.section-desc` 精炼更新为单句：
+    `One single key for every modality — ranked passages, visual assets, and video timestamps.`
+  - 将原有冗余的两句话合二为一，开篇以核心关键词 `One single key` 切入，破折号后自然承接三大多模态输出物，视觉更轻盈，文案更干练。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
