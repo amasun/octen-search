@@ -935,6 +935,20 @@
     - **滑出 Hero 进入下方纯白正文区**（`window.scrollY > heroBottom`）：
       - 自动平滑过渡为 `.header-nav-exact.scrolled`（纯白微透毛玻璃胶囊 `rgba(255, 255, 255, 0.95)`），Logo 自动切换为墨黑版（`.nav-logo-light`），导航文字切换为深灰 `#181D27`，按钮切换为黑底白字胶囊，保证在任何背景区域下极佳的可读性与高级感。
 
+### (92) Pay-as-you-go 价格卡片移除双层外壳并还原为 05-pricing 标签形式（80% Off 与 Early Access）
+- **需求**：Pay-as-you-go 中 80% off ，early access 两个还原为标签形式，样式参考pricing。
+- **落实方案**：
+  - **移除双层外壳与多余标签包裹**：
+    - 在 [`index.html`](file:///x:/XCoding/Octen/08-search%20subpage/index.html) 中，彻底移除了此前包裹在卡片外部的 `.pricing-dual-card` 与 `.pricing-dual-tab`（绿色/浅灰顶部横条）；
+    - 将 4 张 API 计费卡片全面还原为标准的纯净单体卡片 `.pricing-bento-card`（`border-radius: 16px; border: 1px solid #E7E7E3; background: #FFFFFF;`，悬浮时平滑呈现 `border-color: #B5B5B0; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);`）。
+  - **在卡片标题行内嵌入精致徽章标签（对齐 05-pricing ApiExplorer 规范）**：
+    - **Web Search** 与 **Broad Search**：在 `.pricing-card-header` 中紧随 API 名称嵌入 `<span class="badge-discount">80% Off</span>`。
+      - 样式对齐 `05-pricing`：高度 `20px`，内边距 `0 6px`，`border-radius: 4px`，字体 `JetBrains Mono`（粗体 700，字号 11px，行高 1），底色 `#70FE7E`，边框 `1px solid #70FE7E`，文字颜色 `#100F09`。
+    - **Image Search** 与 **Video Search**：在 `.pricing-card-header` 中嵌入 `<span class="badge-ea">Early Access</span>`。
+      - 样式对齐 `05-pricing`：高度 `20px`，内边距 `0 6px`，`border-radius: 4px`，字体 `JetBrains Mono`（中等 500，字号 11px，行高 1），底色 `#E3FFE2`，边框 `1px solid #6FD1A5`，文字颜色 `#1B9C62`。
+  - **CSS 样式表深度清理**：
+    - 从 [`css/style.css`](file:///x:/XCoding/Octen/08-search%20subpage/css/style.css) 中清理了废弃的 `.pricing-dual-card`、`.pricing-dual-tab` 与 `.pricing-dual-tag` 冗余样式代码，确保样式表精简高效。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)

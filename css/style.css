@@ -1460,60 +1460,13 @@
   height: 40px;
 }
 
-/* Dual-Layer Pricing Card Structure (Figma 13588:119016 Spec) */
-.pricing-dual-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  border-radius: 12px;
-  box-sizing: border-box;
-  text-decoration: none;
-  color: inherit;
-  cursor: default;
-}
-
-.pricing-dual-card.theme-discount {
-  background: #70FE7E;
-}
-
-.pricing-dual-card.theme-ea {
-  background: #F4F4F3;
-}
-
-/* Top Dual-Layer Pill / Tag Header */
-.pricing-dual-tab {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 8px 0;
-  box-sizing: border-box;
-}
-
-.pricing-dual-tag {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 11px;
-  letter-spacing: -0.11px;
-  white-space: nowrap;
-  user-select: none;
-}
-
-.pricing-dual-card.theme-discount .pricing-dual-tag {
-  color: #100F09;
-}
-
-.pricing-dual-card.theme-ea .pricing-dual-tag {
-  color: #5E5E5D;
-}
 
 /* Inner White Bento Card */
 .pricing-bento-card {
   position: relative;
   background: #FFFFFF;
   border: 1px solid #E7E7E3;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 22px 20px;
   display: flex;
   flex-direction: column;
@@ -1524,6 +1477,12 @@
   overflow: clip;
   width: 100%;
   cursor: default;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pricing-bento-card:hover {
+  border-color: #B5B5B0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 .pricing-card-top {
@@ -1550,6 +1509,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   width: 100%;
   margin-bottom: 0;
 }
@@ -1599,6 +1559,7 @@
   line-height: 21px;
 }
 
+/* Badge Tags (Exact from 05-pricing ApiExplorer.tsx) */
 .badge-discount {
   display: inline-flex;
   align-items: center;
@@ -1606,10 +1567,10 @@
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
-  line-height: 11px;
+  line-height: 1;
   letter-spacing: -0.11px;
-  height: 22px;
-  padding: 3px 6px;
+  height: 20px;
+  padding: 0 6px;
   border-radius: 4px;
   background: #70FE7E;
   color: #100F09;
@@ -1625,11 +1586,11 @@
   justify-content: center;
   font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 700;
-  line-height: 11px;
+  font-weight: 500;
+  line-height: 1;
   letter-spacing: -0.11px;
-  height: 22px;
-  padding: 3px 6px;
+  height: 20px;
+  padding: 0 6px;
   border-radius: 4px;
   background: #E3FFE2;
   border: 1px solid #6FD1A5;
