@@ -21,26 +21,26 @@
     // --- Configuration Parameters ---
     const config = {
       count: 11,                    // Number of orbiting particles
-      baseRadiusX: 435,             // Orbital horizontal semi-axis
-      baseRadiusY: 225,             // Orbital vertical semi-axis
-      tiltXDeg: 44,                 // Pitch (X) in degrees
-      tiltX: 44 * Math.PI / 180,    // Pitch in radians
-      tiltYDeg: -17,                // Yaw (Y) in degrees
-      tiltY: -17 * Math.PI / 180,   // Yaw in radians
-      tiltZDeg: -6,                 // Roll (Z) in degrees
-      tiltZ: -6 * Math.PI / 180,    // Roll in radians
+      baseRadiusX: 400,             // Orbital horizontal semi-axis
+      baseRadiusY: 215,             // Orbital vertical semi-axis
+      tiltXDeg: 38,                 // Pitch (X) in degrees
+      tiltX: 38 * Math.PI / 180,    // Pitch in radians
+      tiltYDeg: -18,                // Yaw (Y) in degrees
+      tiltY: -18 * Math.PI / 180,   // Yaw in radians
+      tiltZDeg: -8,                 // Roll (Z) in degrees
+      tiltZ: -8 * Math.PI / 180,    // Roll in radians
       curvature: 0.58,              // Saddle curvature factor (z depth)
-      centerYRatio: 0.39,           // Vertical center relative to hero height (0 ~ 1)
+      centerYRatio: 0.41,           // Vertical center relative to hero height (0 ~ 1)
       perspective: 2000,            // Camera focal distance
-      dotSize: 34,                  // Base dot size in pixels
+      dotSize: 52,                  // Base dot size in pixels
       speed: 0.00011,               // Orbital revolution speed
-      dotColor: '#409148',          // Forest green dot color (no radial gradient)
-      dofStrength: 14.5,            // Max background blur intensity in px
+      dotColor: '#488e4f',          // Forest green dot color (no radial gradient)
+      dofStrength: 25,              // Max background blur intensity in px
       dofMinAlpha: 0.18,            // Deepest background dot alpha
       introDuration: 1.8,           // Entrance transition in seconds
       zSplitOffset: 0,              // 3D Sandwich split threshold (Z offset relative to title plane)
       depthMode: 'sandwich',        // 'sandwich' (3D 穿插), 'behind' (全前置), 'front' (全后置)
-      glassBlur: 10,                // Frosted glass backdrop blur in px
+      glassBlur: 8,                 // Frosted glass backdrop blur in px
       glassSaturate: 135,           // Backdrop saturation in %
     };
 
@@ -503,20 +503,7 @@
     document.head.appendChild(style);
 
     // Initial Defaults for Reset
-    const defaults = {
-      tiltXDeg: 44,
-      tiltYDeg: -17,
-      tiltZDeg: -6,
-      curvature: 0.58,
-      baseRadiusX: 435,
-      baseRadiusY: 225,
-      centerYRatio: 0.39,
-      perspective: 2000,
-      dotSize: 34,
-      count: 11,
-      speed: 0.00011,
-      dofStrength: 14.5
-    };
+    const defaults = { ...config };
 
     // Sliders Grouped by Category
     const sliderSections = [
@@ -853,7 +840,7 @@
           if (valDisplay) valDisplay.textContent = `${def}${s.unit}`;
         }
       });
-      setDotColor('#409148');
+      setDotColor(defaults.dotColor);
     });
 
     // Copy parameters button

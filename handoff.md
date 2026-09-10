@@ -1237,6 +1237,20 @@
     - **文字笔画模糊效果**：当绿色球体旋转穿过白色标题文字（`Real-time search API for AI agents`）表面时，球体背后的文字笔画瞬间被物理级虚化模糊并附带晶莹剔透的翡翠绿折射，移开后文字自动恢复清晰锐利；
     - **实时参数可调**：控制面板增加“文字磨砂模糊 Glass Blur”滑块，支持 0 ~ 24px 动态虚化半径微调。
 
+### (121) 同步用户实调 Hero 3D 环绕轨道参数基准 (Hero 3D Orbit Tuned Baseline)
+- **需求**：同步用户在实时调试面板微调后的最佳视觉参数集。
+- **落实方案**（[`js/hero-orbit.js`](file:///x:/XCoding/Octen/08-search%20subpage/js/hero-orbit.js)）：
+  - `baseRadiusX: 400`（横向半轴 400px，轨道更加收敛工整）；
+  - `baseRadiusY: 215`（纵向半轴 215px，垂直张力适中）；
+  - `tiltXDeg: 38`、`tiltYDeg: -18`、`tiltZDeg: -8`（精确匹配 38° 俯仰、-18° 偏航与 -8° 侧倾）；
+  - `curvature: 0.58`、`perspective: 2000`；
+  - `centerYRatio: 0.41`（高度对齐 Hero 41% 位置，与文字居中对齐）；
+  - `dotSize: 52`（球体尺寸 52px，透镜面积更大更具通透质感）；
+  - `dotColor: '#488e4f'`（柔和森林墨绿色调）；
+  - `dofStrength: 25`（后景失焦景深强度 25px）；
+  - `glassBlur: 8`（前景透镜文字磨砂模糊 8px）；
+  - 控制面板中的 `defaults` 统一采用动态继承，点击“重置默认”时始终回退至此套最佳调校值。
+
 ---
 
 ## 📂 4. 关键文件索引 (Key Files)
